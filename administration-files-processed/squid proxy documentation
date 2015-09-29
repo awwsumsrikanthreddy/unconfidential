@@ -1,0 +1,289 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> <How to install squid proxy on centos 6> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+1.Squid is a proxy server for caching and filtering web content . Squid proxy is used by various organisation and internet providers to reduce bandwidth and to increase response time .
+
+2.Squid proxy service will cache the requested web-content and re-using it for the further request of the same content .
+
+
+»>>>>>>>>>>> Install squid proxy on centos 6 :
+
+1.yum update
+
+2.yum install squid
+
+3.service squid start
+
+4.chkconfig --levels 235 squid on
+
+IE : Tools » Internet options »Connections » LAN settings » Choose “Use a proxy server for your LAN” » Type your Proxy server ip(192.168.56.116) and port no 3128
+
+Firefox : Options / Preferences » Advanced » Network » Settings » Choose “Manual proxy configuration ” » Type your Proxy server ip (192.168.56.116 ) and port no 3128
+
+
+Browse some sites and check the access log file on proxy server i.e
+
+5.cat /var/log/squid/access.log
+
+Troubleshooting :
+
+If you not able to browse using proxy settings , Disable the firewall ( iptables ) and selinux service on your squid proxy server .
+
+>>>>>>>>>Disable firewall ( Iptables ) »
+
+service iptables stop
+chkconfig iptables off
+
+>>>>>>>>>Disable Selinux  » open the file /etc/selinux/config and find the line
+
+SELINUX=enforcing
+
+and replace with
+SELINUX=disabled
+now reboot the server and try step 5.
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Configure squid proxy as web filter:
+
+Configure squid proxy as web filter:
+
+You can restrict user access to particular websites or keywords using access control lists (ACLs) .
+» Restricting Access to specific web sites :
+
+For example , we can see how to block facebook.com and gmail.com .
+Step 1 » create a file ( /etc/squid/blockedsites.squid ) and add the site names one per line.
+
+1.cat /etc/squid/blockedsites.squid
+
+Step 2 » Open the /etc/squid/squid.conf and create a new acl ” blocksites” and acl type “dstdomain” in the acl section like the below
+
+2.acl Safe_ports port 488         # gss-http
+  acl Safe_ports port 591         # filemaker
+  acl Safe_ports port 777         # multiling http
+  acl CONNECT method CONNECT
+  # ACL blocksites 
+  acl blocksites dstdomain "/etc/squid/blockedsites.squid"
+  # Deny access to blocksites ACL
+  http_access deny blocksites
+
+3.service squid restart
+
+Step 4 » Try to access facebook.com in your browser . you could see the blocked page as below .
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>» Restricting Access to specific keywords :
+
+Step 1 » create a file ( /etc/squid/blockkeywords.squid ) and add the keywords one per line.
+
+
+1. cat /etc/squid/blockkeywords.squid
+#blocked keywords
+sex
+porn
+xxx
+
+Step 2 » Open the /etc/squid/squid.conf and create a new acl “blockkeywords” and acl type “url_regex” in the acl section
+
+2.vim /etc/squid/squid.conf
+
+acl Safe_ports port 488         # gss-http
+acl Safe_ports port 591         # filemaker
+acl Safe_ports port 777         # multiling http
+acl CONNECT method CONNECT
+# ACL blocksites 
+acl blocksites dstdomain "/etc/squid/blockedsites.squid"
+# ACL blockkeywords
+acl blockkeywords url_regex -i "/etc/squid/blockkeywords.squid"
+
+# Deny access to blocksites ACL
+http_access deny blocksites >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.for blocking sites 
+# Deny access to blockkeywords ACL 
+http_access deny blockkeywords >>>>>>>>>>>>>>>>>>>>>>>>for blocking sites by keywords
+
+3.service squid restart
+
+check in browser using selected keywords for cross check.
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>» Restricting Access to specific Ipaddress 
+
+Step 1 » create a file ( /etc/squid/blockip.squid ) and add the ip adresses one per line.
+
+1.cat /etc/squid/blockip.squid
+
+#blocked ips
+192.168.1.20
+192.168.1.21
+
+Step 2 » Open the /etc/squid/squid.conf and create a new acl “blockip” and acl type “src” in the acl section
+
+2.vim /etc/squid/squid.conf
+
+# ACL blocksites 
+acl blocksites dstdomain "/etc/squid/blockedsites.squid" >>>>>>>>>>>>>>>>>>>>>>>>>. for blocking sites by name
+# ACL blockkeywords
+acl blockkeywords url_regex -i "/etc/squid/blockkeywords.squid" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> for blocking keywords
+# ACL blockip
+acl blockip src "/etc/squid/blockip.squid" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>for blocking ip in browser
+
+# Only allow cachemgr access from localhost
+http_access allow manager localhost
+# Deny access to blockip ACL
+http_access deny blockip
+# Deny access to blocksites ACL
+http_access deny blocksites
+# Deny access to blockkeywords ACL
+http_access deny blockkeywords
+
+
+3.service squid restart
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>» Allow Full access to specific Ipaddress :
+
+You can allow specific ip address to gain full access without blocking sites and keywords . 
+just create a file “/etc/squid/allowip.squid ” and add the ip address one per line and create an acl “allowip”  and acl type “src” in the acl section
+
+1.vim /etc/squid/allowip.squid
+
+2.vim /etc/squid/squid.conf
+
+# ACL allowip
+acl allowip src "/etc/squid/allowip.squid"
+
+# Only allow cachemgr access from localhost
+http_access allow manager localhost
+# Deny access to blockip ACL
+http_access deny blockip
+# Deny access to blocksites ACL
+http_access deny blocksites !allowip
+# Deny access to blockkeywords ACL
+http_access deny blockkeywords !allowip
+
+3.service squid restart
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>» Changing squid proxy port number:
+
+
+You can change squid proxy port number , by default it uses 3128 port .
+
+Just find the below line in “/etc/squid/squid.conf”
+
+1.vim /etc/squid/squid.conf
+
+http_port 3128
+
+and replace with
+
+http_port 8000 # whatever port number you want 
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>»  Restricting Download size :
+
+You can restrict download file size  using "reply_body_max_size" .
+
+Add the below line at the bottom of the http_access section
+
+
+1.vim /etc/squid/squid.conf
+
+#Restrict download size
+reply_body_max_size 10 MB all
+
+or
+
+#Restrict download size
+reply_body_max_size 10 MB !allowip >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>if used only allow ip in previous u can use allow ip here
+
+2.service squid restart
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.» Configuring Squid as Transparent Proxy :
+
+You can configure squid as transparent proxy .
+
+Step 1 » just find the below line
+
+1.vim /etc/squid/squid.conf
+
+# Squid normally listens to port 3128
+http_port 3128
+
+and replace with
+
+# Squid normally listens to port 3128
+http_port 3128 intercept
+
+Step 2 » Create a file “/root/squidfw.sh” and add the following firewall script ( modify as per your interface configuration ).
+
+2.vim /root/squidfw.sh
+
+  #!/bin/sh
+# squid server IP
+SQUID_SERVER="192.168.1.11"
+# Interface connected to Internet
+INTERNET="eth0"
+# Interface connected to LAN
+LAN_IN="eth1"
+# Squid port
+SQUID_PORT="3128"
+# DO NOT MODIFY BELOW
+# Clean old firewall
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+# Load IPTABLES modules for NAT and IP conntrack support
+modprobe ip_conntrack
+modprobe ip_conntrack_ftp
+# For win xp ftp client
+#modprobe ip_nat_ftp
+echo 1 > /proc/sys/net/ipv4/ip_forward
+# Setting default filter policy
+iptables -P INPUT DROP
+iptables -P OUTPUT ACCEPT
+# Unlimited access to loop back
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+# Allow UDP, DNS and Passive FTP
+iptables -A INPUT -i $INTERNET -m state --state ESTABLISHED,RELATED -j ACCEPT
+# set this system as a router for Rest of LAN
+iptables --table nat --append POSTROUTING --out-interface $INTERNET -j MASQUERADE
+iptables --append FORWARD --in-interface $LAN_IN -j ACCEPT
+# unlimited access to LAN
+iptables -A INPUT -i $LAN_IN -j ACCEPT
+iptables -A OUTPUT -o $LAN_IN -j ACCEPT
+# DNAT port 80 request comming from LAN systems to squid 3128 ($SQUID_PORT) aka transparent proxy
+iptables -t nat -A PREROUTING -i $LAN_IN -p tcp --dport 80 -j DNAT --to $SQUID_SERVER:$SQUID_PORT
+# if it is same system
+iptables -t nat -A PREROUTING -i $INTERNET -p tcp --dport 80 -j REDIRECT --to-port $SQUID_PORT
+# DROP everything and Log it
+iptables -A INPUT -j LOG
+iptables -A INPUT -j DROP
+
+
+Step 3 » just run the script
+
+3.sh /root/squidfw.sh
+
+and add the below line to “/etc/rc.local” to run the script during startup
+
+4.vim /etc/rc.local
+
+sh /root/squidfw.sh
+
+Step 4 (Updated) » Change default gateway ip to squid server ip on the user machines .
+Now users can access Internet without setting proxy in the browser settings.
+
+That’s it , hope this article will help you to learn little things about configuring squid proxy on centos 6.
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>THE END<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ 

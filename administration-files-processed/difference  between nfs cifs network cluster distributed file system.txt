@@ -1,0 +1,31 @@
+difference  between nfs cifs network cluster distributed file system
+>>>
+    Network = one server, or appearance thereof.
+    Cluster = multiple servers with a "shared disk" model (SAN with failover)
+    Distributed = multiple servers with a "shared nothing" model (server-local disks with or without replication)
+
+Thus, NFSv3 is a network filesystem.  GFS2 is a cluster filesystem.  GlusterFS is a distributed filesystem.  NFSv4, especially with pNFS, is a bit of a weird network/distributed hybrid.  It's still fundamentally a single-server model, but with little bits of multi-server support grafted on.
+
+
+
+
+
+despite the huge popularity of Jeff Darcy's response, I will make an attempt to describe the three.
+
+Network file system - One way to describe it is - any file system that is not local. It is being served over a network, with the physical storage units and their management hosted by a different entity.
+
+Say SMB, when you mount a Windows Share from one system to your workstation, you are accessing the share over a network. You have no idea of the file system size, the physical disks or how its been formatted.
+
+Distributed File System - A file system that has its components spread across multiple systems. So a network file system is inherently a distributed file system as well. The client component is on a different system than the underlying physical storage or its management.
+
+Say NFS, in the simplest case has its physical disks formatted as ext3/4/<whatever> and exported from the server. Your workstation can mount this file system using an NFS client. The client and server components are distributed among different entities. A single server with a single disk and a single client is a distributed file system.
+
+NFS, CIFS (SMB) are both distributed file systems and both use a single server with multiple clients.
+
+Clustered File System - A file system is built by pooling several different discrete components, typically multiple servers, multiple disks, working together to provide a unified namespace. A client is not aware of the physical boundaries that make up the file system.
+
+A clustered file system will always be a distributed file system served over a network.
+
+Ex: Lustre, GPFS, etc.
+
+You can have 10 servers, each with its own disk pool and configure a single file system spanning 10 servers and all their disks. Thats a clustered file system.

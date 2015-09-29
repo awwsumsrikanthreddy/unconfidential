@@ -1,0 +1,144 @@
+link: http://www.cyberciti.biz/faq/mhddfs-linux-combines-a-several-mount-points-into-single-one/
+
+
+How To Join Several Partition Together To Form a Single Larger One On a Linux Using mhddfs
+
+
+
+'ve three old hard drives: sized 60, 60 and 120 GB. And 200 GB of video files, which I need to store on these drives. How would I store all my files on three hard drive without split a file into pieces or creating RAID array? How can I combines a several mount points (partitions) into the single one on a Linux operating systems?
+
+The easiest and fastest solution is to use mhddfs driver on Linux operating systems. It is a fuse-based file system for unifying several mount points into one. From the man page:
+Tutorial details	
+Difficulty	Easy (rss)
+Root privileges	Yes
+Requirements	mhddfs
+Estimated completion time	10m
+
+    The mhddfs (fuse) file system allows to unite a several mount points (or directories) to the single one. So a one big filesystem is simulated and this makes it possible to combine a several hard drives or network file systems. This system is like unionfs but it can choose a drive with the most of free space, and move the data between drives transparently for the applications. While writing files they are written to a 1st hdd until the hdd has the free space (see mlimit option), then they are written on a 2nd hdd, then to 3rd etc. df will show a total statistics of all filesystems like there is a big one hdd. If an overflow arises while writing to the hdd1 then a file content already written will be transferred to a hdd containing enough of free space for a file. The transferring is processed on-the-fly, fully transparent for the application that is writing. So this behaviour simulates a big file system.
+
+In this tutorial you will learn how to install and configure MHDDFS virtual storage pool on a Linux operating systems.
+Our sample setup
+
+For demo purpose I've three hard disks drive /dev/sdb1, /dev/sdc1, and /dev/sdd1 as follows:
+# df
+
+Sample outputs:
+Fig.01 My 3 hard drives are mounted at /disk1,/disk2 and /disk3
+
+Fig.01 My 3 hard drives are mounted at /disk1,/disk2 and /disk3
+
+And files in my /disk{1,2,3}/ dirs are as follows:
+# ls -l /disk{1,2,3}
+
+Sample outputs:
+
+/disk1:
+total 28
+drwxr-xr-x 2 root root  4096 Aug  8 14:25 app1
+drwx------ 2 root root 16384 Aug  8 14:20 lost+found
+-rw-r--r-- 1 root root  7545 Aug  8 14:26 resume.txt
+ 
+/disk2:
+total 28
+drwxr-xr-x 2 root root  4096 Aug  8 14:25 app2
+drwx------ 2 root root 16384 Aug  8 14:20 lost+found
+-rw-r--r-- 1 root root  6303 Aug  8 14:26 party.jpg
+ 
+/disk3:
+total 40
+drwxr-xr-x 2 root root  4096 Aug  8 14:25 app3
+drwx------ 2 root root 16384 Aug  8 14:21 lost+found
+-rw-r--r-- 1 root root 17080 Aug  8 14:26 output.log
+ 
+
+Installation
+
+Let us see how to install mhddfs package on different Linux distros.
+Install mhddfs package on a Debian/Ubuntu/Mint Linux & Co
+
+Type the following apt-get command to install mhddfs:
+# apt-get install mhddfs
+
+Sample outputs:
+Fig.02: Install mhddfs package
+
+Fig.02: Install mhddfs package
+
+Install mhddfs package on a Fedora/RHEL/CentOS Linux & Co
+
+Turn on EPEL repo and type the following command:
+# yum install mhddfs
+
+Fedora Linux v22.x+ user type the following command:
+# dnf install mhddfs
+
+Sample outputs:
+Fig.03: Install mhddfs rpm package
+
+Fig.03: Install mhddfs rpm package
+
+Configuration
+
+First, create a new mount point directory called /virtual.data, enter:
+# mkdir /virtual.data
+
+To join all three drives (see fig.01) together, enter:
+# mhddfs /disk1,/disk2,/disk3 /virtual.data -o allow_other
+
+Sample outputs:
+Fig.04: mhddfs in action
+
+Fig.04: mhddfs in action
+
+That's all. You can now verify that /virtual.data/ as a single bing volume i.e. several directories combined, simulating a single big volume which can merge several hard drives or remote file systems:
+# df
+
+Sample outputs:
+
+Filesystem           1K-blocks    Used Available Use% Mounted on
+/dev/sda1             39428520 6109320  31293268  17% /
+udev                     10240       0     10240   0% /dev
+tmpfs                   811792    9084    802708   2% /run
+tmpfs                  2029472     144   2029328   1% /dev/shm
+tmpfs                     5120       4      5116   1% /run/lock
+tmpfs                  2029472       0   2029472   0% /sys/fs/cgroup
+tmpfs                   405896      16    405880   1% /run/user/1000
+/dev/sdb1              4061888    8196   3827644   1% /disk1
+/dev/sdc1              4061888    8196   3827644   1% /disk2
+/dev/sdd1              4061888    8208   3827632   1% /disk3
+/disk1;/disk2;/disk3  12185664   24600  11482920   1% /virtual.data
+
+Also, note down ls -l command output:
+
+# ls -l /virtual.data/
+total 64
+drwxr-xr-x 2 root root  4096 Aug  8 14:25 app1
+drwxr-xr-x 2 root root  4096 Aug  8 14:25 app2
+drwxr-xr-x 2 root root  4096 Aug  8 14:25 app3
+drwx------ 2 root root 16384 Aug  8 14:20 lost+found
+-rw-r--r-- 1 root root 17080 Aug  8 14:26 output.log
+-rw-r--r-- 1 root root  6303 Aug  8 14:26 party.jpg
+-rw-r--r-- 1 root root  7545 Aug  8 14:26 resume.txt
+
+You can now copy files or create new directories as per your requirement:
+# cd /virtual.data/
+# mkdir Music
+# rsync -avp /somewhere/* Music/
+....
+..
+Update /etc/fstab
+
+Update /etc/fstab file as follows:
+
+ 
+mhddfs#/disk1,/disk2,disk3 /virtual.data/ fuse defaults,allow_other 0 0
+ 
+
+How do I unmount mhddfs based fuse file systems
+
+Use the umount command to detaches the /virtual.data/ file system:
+# umount /virtual.data/
+
+For more info type see mhddfs man page.
+
+

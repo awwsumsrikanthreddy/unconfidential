@@ -1,0 +1,24 @@
+alien vault ossim and intrusion detection tools
+
+
+OSSIM (Open Source Security Information Management) is an open source security information and event management system, integrating a selection of tools designed to aid network administrators in computer security, intrusion detection and prevention.
+
+
+
+intrusion detection systems
+
+1.open vas
+2.snort
+3.suricata
+4.tcp track
+5.ossec
+
+other network admin tools
+
+ntop
+arpwatch
+munin
+netflow
+nagios
+prads
+pof

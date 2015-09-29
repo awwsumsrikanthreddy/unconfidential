@@ -1,0 +1,63 @@
+yum command options
+
+
+>>>>># yum install package
+update 	Update a package or packages on your system
+
+>>>># yum update package
+
+remove 	Remove the packages
+# yum remove package
+
+groupinstall 	Install the packages in a group on your system
+# yum groupinstall "X Window System"
+
+groupupdate 	Update the packages in a group on your system
+# yum groupupdate "X Window System"
+
+groupremove 	Remove the packages in a group from your system
+# yum groupremove "X Window System"
+
+list 	List a package or groups of packages
+# yum list
+
+
+⇒ display packages that is possible to install
+# yum list installed
+
+⇒ display installed packages
+
+check-update 	Check for available package updates
+# yum check-update
+
+info 	Display details about a package or group of packages
+# yum info package
+
+search 	Search package details for the given string
+# yum search keyword
+
+deplist 	List a package's dependencies
+# yum deplist package
+
+option
+
+-y 	answer yes for all questions
+
+# yum -y install package
+
+--enablerepo=repo 	enable one or more repositories (wildcards allowed)
+
+# yum --enablerepo=repo install package
+
+--disablerepo=repo 	disable one or more repositories (wildcards allowed)
+
+# yum --disablerepo=repo install package
+
+--exclude=package 	exclude package(s) by name or glob
+
+# yum --exclude=package update
+
+--noplugins 	disable Yum plugins
+
+# yum --noplugins update
+

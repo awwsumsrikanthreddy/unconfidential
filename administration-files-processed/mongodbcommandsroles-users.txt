@@ -1,0 +1,104 @@
+creating user:
+>>>>>>>>>>>>>>
+
+db.createUser({user:"admin",pwd:"123", roles:[{role:"root",db:"admin"}]})
+
+
+db.createUser({user:"admin",pwd:"123", roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
+
+
+mongo --port 27017 -u admin -p 123 --authenticationDatabase admin
+
+db.getReplicationInfo()
+
+db.shutdownServer()
+
+
+cfg = rs.conf()
+
+link: http://docs.mongodb.org/manual/tutorial/reconfigure-replica-set-with-unavailable-members/
+
+    db.auth("admin","123")
+
+
+
+db.grantRolesToUser( "mongoadmin", [{ role: "read", db: "local"}])
+
+db.grantRolesToUser("admin", [{role: "hostManager", db: "admin"}])
+
+rm -rf /tmp/*
+rm -rf /var/log/mongodb/mongod.log
+rm -rf /var/lib/mongo/*
+
+
+
+rs.printSlaveReplicationInfo()
+
+rs.printReplicationInfo()
+
+
+on error machine
+ rs.slaveOK()
+
+to get o/p
+
+**
+db.getMongo().setSlaveOk()
+
+show dbs
+
+
+
+
+
+
+db.auth( {
+   user: <username>,
+   pwd: <password>,
+   mechanism: MONGODB-CR ,
+   digestPassword: <boolean>
+} )
+
+
+
+
+
+
+
+
+db.createUser({user:"admin",pwd:"123", roles:[{role:"root",db:"admin"}]})
+db.auth("admin","123")
+
+
+
+db.createUser({user:"admin",pwd:"123", roles: [  "userAdminAnyDatabase","readWriteAnyDatabase" ]})
+
+use admin
+db.addUser({user: "foo" , pwd: "bar", roles: [  "userAdminAnyDatabase","readWriteAnyDatabase" ]})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+db.createUser(
+    {
+      user: "srikanth",
+      pwd: "123",
+      roles: [
+         { role: "readWrite", db: "srikanth" }
+      ]
+    }
+)
+
+This how we Roll on a Spiritual Night :) 
+welcoming our godly Ganesha to our colony 
+Hail lord Ganesha

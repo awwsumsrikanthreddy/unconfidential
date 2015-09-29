@@ -1,0 +1,20 @@
+un expected failures
+>>>>>>>>>>>>>>>>>>>>
+
+ubuntu andcentos
+>>>>>>>>>>>>>>>>
+1. journalctl >>>>>only centos
+2. var/log/messages
+3. var/log/kern.log
+4. var/log/user.log
+5. var/log/secure
+6. var/log/syslog
+7. last -b
+8. last -x | grep shutdown
+9. last reboot | head -1
+10.var/log/boot
+11.var/log/debug
+12./etc/rc.d/init.d/cpuspeed status
+13.bios temperature checkup
+
+

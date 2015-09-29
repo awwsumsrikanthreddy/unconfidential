@@ -1,0 +1,66 @@
+mount googledrive on linux Using “Google Drive OCamlfuse” Client
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+commands: 
+
+$ mkdir ~/google-drive
+$ google-drive-ocamlfuse ~/google-drive
+$ google-drive-ocamlfuse -label label [mountpoint]
+
+>>The label options is used to distinguish different accounts under directory ~/.gdfuse/label to host configuration, application state, and file cache.
+
+>>Do remember no files are shared among different accounts, so that you can have a different configuration for each Google account.
+
+
+
+umount
+>>>>>>
+
+To unmount the Google Drive, you have to run:
+
+$ fusermount -u ~/google-drive
+
+
+
+
+Mount Google Drive Automatically in Linux
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+>>You may mount more than one drive at a time and also mount Google drive automatically at boot.
+
+>>create a shell script gdfuse in the directory /usr/bin as root, with the below content.
+
+
+#!/bin/bash
+su $USERNAME -l -c "google-drive-ocamlfuse -label $1 $*" 
+exit 0
+
+
+>>Make it executable.
+
+
+# chmod 755 /usr/bin/gdfuse
+
+>>Create mountpoint say /mnt/gdrive and give ownership to user ‘avi‘.
+
+# mkdir /mnt/gdrive
+# chown avi.avi /mnt/gdrive
+
+>>Next, open and edit file /etc/fstab and add below line at the bottom. Save and exit.
+
+#vim /etc/fstab
+
+gdfuse#default	 /mnt/gdrive 	fuse 	uid=1000,gid=1000 	0 	0
+
+>>Take extra care of ‘uid‘ and ‘gid‘. Change it as user’s uid and gid.
+
+>>To mount the google drive now, run:
+
+# mount /mnt/gdrive
+
+>For more information about how to include and use multiple Google accounts, see the google-drive-ocamlfuse wiki.
+
+
+

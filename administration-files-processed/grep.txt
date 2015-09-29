@@ -1,0 +1,32 @@
+grep 
+>>>>
+
+link 
+
+www.cyberciti.biz/faq/searching-multiple-words-string-using-grep/
+
+1.search multiple strings
+
+grep 'word1\|word2\|word3' /path/to/file
+
+example: $ grep 'warning\|error\|critical' /var/log/messages
+
+
+
+grep -E ‘error|critical’ sample.txt2.
+
+
+I also wanted to find all files that contained two separate words. The words could be anywhere in the file.
+
+One way that I found to do this is:
+grep -l word1 `grep -l word2 *`
+
+
+The backtick quotes execute what is inside the quotes and replace it with the results. -l returns file names only.
+
+More commonly I would also include -ir for case-ignorant recursive search:
+grep -irl word1 `grep -irl word2 *`
+
+
+
+

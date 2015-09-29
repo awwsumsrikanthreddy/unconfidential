@@ -1,0 +1,60 @@
+script to show disk usage on last day of month
+
+tommorows date
+
+1.TZ=IST-24 date +%d
+
+2.TZ=GMT-24 date +%d
+
+
+shell script to take back upat end of month
+
+command: vim 1.sh
+
+
+day=$(TZ=IST-24 date +%d)
+
+
+if test $day -eq 1;
+then
+echo "last day of the month"
+else 
+echo "noop no today"
+fi
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+script to show disk usage on last day of month
+
+
+vim script.sh
+
+day=$(TZ=IST-24 date +%d)
+
+if test $day -eq 1; then
+    # Call disk usage script
+    /root/scripts/disk-usage.sh
+fi
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+create a cron job
+
+
+
+crontab -e
+
+
+
+Append the following code to run a script called /root/scripts/is-end-of-month.sh once a day:
+
+@daily	       /root/scripts/disk-usage.sh
+
+
+
+OR
+
+
+0 0 * * *      /root/scripts/disk-usage.sh 

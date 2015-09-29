@@ -1,0 +1,17 @@
+
+
+
+links: http://www.unixmen.com/install-configure-nagios-4-centos-7/
+
+links: https://kezhong.wordpress.com/2011/05/29/store-data-from-nagios-into-mysql-using-ndoutils-on-fedora-14/
+
+
+after nagios is configured
+
+1.yum install epel-release
+
+
+2.yum install nrpe nagios-plugins-all openssl
+
+
+3.yum install ntdoutils*  ------formysql

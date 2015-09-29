@@ -1,0 +1,59 @@
+
+50 UNIX / Linux Sysadmin Tutorials
+by Ramesh Natarajan on December 25, 2010
+
+Merry Christmas and Happy Holidays to all TGS Readers.
+
+To wrap this year, I’ve collected 50 UNIX / Linux sysadmin related tutorials that we’ve posted so far. This is lot of reading. Bookmark this article for your future reference and read it whenever you get free time.
+
+    Disk to disk backup using dd command: dd is a powerful UNIX utility, which is used by the Linux kernel makefiles to make boot images. It can also be used to copy data. This article explains how to backup entire hard disk and create an image of a hard disk using dd command.
+    15 rsync command examples: Every sysadmin should master the usage of rsync. rsync utility is used to synchronize the files and directories from one location to another. First time, rsync replicates the whole content between the source and destination directories. Next time, rsync transfers only the changed blocks or bytes to the destination location, which makes the transfer really fast.
+    Three sysadmin rules: If you are a sysadmin, you can’t (and shouldn’t) break these three sysadmin rules.
+    User and group disk quota: This article explains how to setup user and group quote with soft limit, hard limit and grace period. For example, if you specify 2GB as hard limit, user will not be able to create new files after 2GB.
+    Troubleshoot using dmesg: Using dmesg you can view boot up messages that displays information about the hardware devices that the kernel detects during boot process. This can be helpful during troubleshooting process.
+    RPM package management examples: 15 examples provided in this article explains everything you need to know about managing RPM packages on redhat based system (including CentOS).
+    10 netstat examples: Netstat command displays various network related information such as network connections, routing tables, interface statistics, masquerade connections, multicast memberships etc.,
+    Manage packages using apt-* commands: These 13 practical examples explains how to manage packages using apt-get, apt-cache, apt-file and dpkg commands.
+    Modprobe command examples: modprobe utility is used to add loadable modules to the Linux kernel. You can also view and remove modules using modprobe command.
+    Ethtool examples: Ethtool utility is used to view and change the ethernet device parameters. These examples will explain how you can manipulate your ethernet NIC card using ethtool.
+    NFS mount using exportfs: This is a linux beginners guide to NFS mount using exportfs. This explains how to export a file system to a remote machine and mount it both temporarily and permanently.
+    Change timezone: Depending on your Linux distribution, use one of the methods explained in this article to change the timezone on your system.
+    Install phpMyAdmin: phpMyAdmin is a web-based tool written in PHP to manage the MySQL database. Apart from viewing the tables (and other db objects), you can perform lot of DBA functions through the web based interface. You can also execute any SQL query from the UI.
+    Setup squid to control internet access: Squid is a proxy caching server. You can use squid to control internet access at work. This guide will give a jump-start on how to setup squid on Linux to restrict internet access in an network.
+    Add new swap space: Use dd, mkswap and swapon commands to add swap space. You can either use a dedicated hard drive partition to add new swap space, or create a swap file on an existing filesystem and use it as swap space.
+    Install and configure snort: Snort is a free lightweight network intrusion detection system for both UNIX and Windows. This article explains how to install snort from source, write rules, and perform basic testing.
+    Register RHEL/OEL linux to support: If you have purchased support from Oracle for your Linux, you can register to oracle support network (ULN) using up2date as explained here.
+    tftpboot setup: You can install Linux from network using PXE by installing and configuring tftpboot server as explained here.
+    Delete all iptables rules: When you are starting to setup iptables, you might want to delete (flush) all the existing iptables as shown here.
+    Disable ping replies: Someone can flood the network with ping -f. If ping reply is disabled as explained here we can avoid this flooding.
+    Block ip address using fail2ban: Fail2ban is a intrusion preventon framework that scans log files for various services ( SSH, FTP, SMTP, Apache, etc., ) and bans the IP that makes too many password failures. It also updates iptles firewall rules to reject these ip addresses.
+    Package management using dpkg: On debian, you can install or remove deb packages using dpkg utility.
+    Alfresco content management system: Alfresco is the best open source content management system. Everything you need to know to install and configure Alfresco is explained here.
+    Bugzilla bug tracking system: Bugzilla is the best open source bug tracking system. Everything you need to know to install and configure Bugzilla is explained here.
+    Rpm, deb, dpot and msi packages: This article explains how to view and extract files from various package types used by different Linux / UNIX distributions.
+    Backup using rsnapshot: You can backup either a local host or remote host using rsnapshot rsync utility. rsnapshot uses the combination of rsync and hard links to maintain full-backup and incremental backups. Once you’ve setup and configured rsnapshot, there is absolutely no maintenance involved in it. rsnapshot will automatically take care of deleting and rotating the old backups.
+    Create Linux user: This article explains how to create users with default configuration, create users with custom configuration, create users interactively, and creating users in bulk.
+    Mount and view ISO file: ISO files are typically used to distribute the operating system. Most of the linux operating system that you download will be on ISO format. This explains how to view and mount any ISO file both as regular use and as root user.
+    Manage password expiration and aging: Linux chage command can be used to perform several practical password aging activities including how-to force users to change their password.
+    ifconfig examples: Interface configurator command ifconfig is used to initialize the network interface and to enable or disable the interfaces as shown in these 7 examples.
+    Oracle db startup an sthudown: Every sysadmin should know some basic DBA operations. This explains how to shutdown and start the oracle database.
+    PostgreSQL install and configure: Similar to mySQL, postgreSQL is very famous and feature packed free and open source database. This is a jumpstart guide to install and configure postgresql from source on Linux.
+    Magic SysRq key: Have you wondered what the SysRq key on your keyboard does. Here is one use for it. You can safely reboot Linux using the magic SysRq key as explained here.
+    Wakeonlan Tutorial: Using Wakeonlan WOL, you can turn on the remote servers where you don’t have physical access to press the power button.
+    List hardware spec using lshw: ls+hw = lshw, which lists the hardware specs of your system.
+    View hardware spec using dmidecode: dmidecode command reads the system DMI table to display hardware and BIOS information of the server. Apart from getting current configuration of the system, you can also get information about maximum supported configuration of the system using dmidecode. For example, dmidecode gives both the current RAM on the system and the maximum RAM supported by the system.
+    Use the support effectively: Companies spend lot of cash on support mainly for two reasons: 1) To get help from vendors to fix critical production issues 2) To keep up-to-date with the latest version of the software and security patches released by the vendors. In this article, I’ve given 10 practical tips for DBAs, sysadmins and developers to use their hardware and software support effectively.
+    Install/Upgrade LAMP using Yum: Installing LAMP stack using yum is a good option for beginners who don’t feel comfortable installing from source. Also, Installing LAMP stack using yum is a good choice, if you want to keep things simple and just use the default configuration.
+    Template to track your hardware assests: If you are managing more than one equipment in your organization, it is very important to document and track ALL information about the servers effectively. In this article, I have listed 36 attributes that needs to be tracked for your equipments, with an explanation on why it needs to be tracked. I have also provided a spreadsheet template with these fields that will give you a jumpstart.
+    Disable SELinux: If you don’t understand how SELinux works and the fundamental details on how to configure it, keeping it enabled will cause lot of issues. Until you understand the implementation details of SELinux you may want to disable it to avoid some unnecessary issues as explained here.
+    Install PHP5 from source: This is a step-by-step guide to install PHP5 from source on UNIX environment.
+    Install MySQL from source: This is a step-by-step guide to install MySQL from source on UNIX environment.
+    Launch Linux clients on windows: If you are using SSH client to connect to Linux server from your Windows laptop, sometimes it may be necessary to launch UI application on the remote Linux server, but to display the UI on the windows laptop. Cygwin can be used to install software on Linux from Windows and launch Linux X client software on Windows.
+    IPCS: IPC allows the processes to communicate with each another. The process can also communicate by having a file accessible to both the processes. Processes can open, and read/write the file, which requires lot of I/O operation that consumes time. This explains different types of IPCS and provides 10 IPCS command examples.
+    Logical Volume Manager: Using LVM we can create logical partitions that can span across one or more physical hard drives.You can create and manage LVM using vgcreate, lvcreate, and lvextend lvm2 commands as shown here.
+    15 Tcpdump examples: tcpdump is a network packet analyzer. tcpdump allows us to save the packets that are captured, so that we can use it for future analysis. The saved file can be viewed by the same tcpdump command. We can also use open source software like wireshark to read the tcpdump pcap files.
+    Manage partition using fdisk: Using fdisk you can create a maximum of four primary partition, delete an existing partition, or change existing partition. Using fidsk you are allowed to create a maximum of four primary partition, and any number of logical partitions, based on the size of the disk.
+    VMWare fundamentals: At some point every sysadmin should deal with virtualization. VMWare is a very popular choise to virtualize your server environment. This article will provide the fundamental information for you to get a jumpstart on VMWare.
+    Rotate the logs automatically: Manging log files is an importat part of sysadmin life. logrotate make it easy by allowing you to setup automatica log rotation based on several configurations. Using logrotate you can also configure it to execute custom shell scripts immediately after log rotation.
+    Passwordless SSH login setup: Using ssh-keygen and ssh-copy-id you can setup passwordless login to remote Linux server. ssh-keygen creates the public and private keys. ssh-copy-id copies the local-host’s public key to the remote-host’s authorized_keys file.
+

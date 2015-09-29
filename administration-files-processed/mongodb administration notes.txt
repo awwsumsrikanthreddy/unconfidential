@@ -1,0 +1,229 @@
+mongodb administration notes
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+MongoDB supports 2 Storage Engines
+
+1.MMAPv1, the storage engine available in previous versions of MongoDB, and WiredTiger. MongoDB uses the MMAPv1 engine by default.
+
+
+Concurrency
+>>>>>>>>>>>
+
+MMAPv1
+>>>>>>>
+>>Changed in version 3.0: Beginning with MongoDB 3.0, MMAPv1 provides collection-level locking: All collections have a unique readers-writer lock that allows multiple clients to modify documents in different collections at the same time.
+
+>>For MongoDB versions 2.2 through 2.6 series, each database has a readers-writer lock that allows concurrent read access to a database, but gives exclusive access to a single write operation per database. 
+
+>>See the Concurrency page for more information. In earlier versions of MongoDB, all write operations contended for a single readers-writer lock for the entire mongod instance.
+
+
+WiredTiger
+>>>>>>>>>>
+
+>>WiredTiger supports concurrent access by readers and writers to the documents in a collection. Clients can read documents while write operations are in progress, and multiple threads can modify different documents in a collection at the same time
+
+
+
+Data Consistency
+>>>>>>>>>>>>>>>>
+
+Journaling
+
+>>MongoDB uses write ahead logging to an on-disk journal. Journaling guarantees that MongoDB can quickly recover write operations that were not written to data files in cases where mongod terminated as a result of a crash or other serious failure.
+
+>>Leave journaling enabled in order to ensure that mongod will be able to recover its data files and keep the data files in a valid state following a crash.
+
+
+
+Networking
+>>>>>>>>>>
+
+>>Use Trusted Networking Environments
+
+>>Always run MongoDB in a trusted environment, with network rules that prevent access from all unknown machines, systems, and networks. 
+
+>>As with any sensitive system that is dependent on network access, your MongoDB deployment should only be accessible to specific systems that require access, such as application servers, monitoring services, and other MongoDB components.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+Security Checklist
+>>>>>>>>>>>>>>>>>>>
+
+1.Require Authentication
+
+>>Enable MongoDB authentication and specify the authentication mechanism. You can use the MongoDB authentication mechanism or an existing external framework. 
+
+>>Authentication requires that all clients and servers provide valid credentials before they can connect to the system. In clustered deployments, enable authentication for each MongoDB server.
+
+
+2.Configure Role-Based Access Control
+
+>>Create a user administrator first, then create additional users. Create a unique MongoDB user for each person and application that accesses the system.
+
+
+3.Encrypt Communication
+
+>>Configure MongoDB to use TLS/SSL for all incoming and outgoing connections. Use TLS/SSL to encrypt communication between mongod and mongos components of a MongoDB client as well as between all applications and MongoDB.
+
+
+4.Limit Network Exposure
+
+>>Ensure that MongoDB runs in a trusted network environment and limit the interfaces on which MongoDB instances listen for incoming connections. Allow only trusted clients to access the network interfaces and ports on which MongoDB instances are available.
+
+
+
+5.Encrypt and Protect Data
+
+>>Encrypt MongoDB data on each host using file-system, device, or physical encryption. Protect MongoDB data using file-system permissions. MongoDB data includes data files, configuration files, auditing logs, and key files.
+
+
+6.Run MongoDB with a Dedicated User
+
+>>Run MongoDB processes with a dedicated operating system user account. Ensure that the account has permissions to access data but no unnecessary permissions.
+
+
+
+Configuration Option
+>>>>>>>>>>>>>>>>>>>>
+
+
+>>You can limit the network exposure with the following mongod and mongos configuration options: enabled, net.http.RESTInterfaceEnabled, bindIp, and port. You can use a configuration file to specify these settings.
+
+
+
+nohttpinterface
+
+>>The enabled setting for mongod and mongos instances disables the “home” status page.
+
+
+rest
+
+>>The net.http.RESTInterfaceEnabled setting for mongod enables a fully interactive administrative REST interface, which is disabled by default. 
+>>The net.http.RESTInterfaceEnabled configuration makes the http status interface [1], which is read-only by default, fully interactive. 
+>>Use the net.http.RESTInterfaceEnabled setting with the enabled setting.
+
+
+bind_ip
+
+>>The bindIp setting for mongod and mongos instances limits the network interfaces on which MongoDB programs will listen for incoming connections. 
+>>You can also specify a number of interfaces by passing bindIp a comma separated list of IP addresses. You can use the mongod --bind_ip and mongos --bind_ip option on the command line at run time to limit the network accessibility of a MongoDB program.
+
+
+port
+
+>>The port setting for mongod and mongos instances changes the main port on which the mongod or mongos instance listens for connections. The default port is 27017. 
+>>Changing the port does not meaningfully reduce risk or limit exposure. You may also specify this option on the command line as mongod --port or mongos --port. 
+>>Setting port also indirectly sets the port for the HTTP status interface, which is always available on the port numbered 1000 greater than the primary mongod port
+
+
+Firewalls
+
+>>Firewalls allow administrators to filter and control access to a system by providing granular control over what network communications. For administrators of MongoDB, the following capabilities are important: limiting incoming traffic on a specific port to specific systems, and limiting incoming traffic from untrusted hosts.
+
+
+network security tools
+>>>>>>>>>>>>>>>>>>>>>>>
+
+
+1.Configure Linux iptables Firewall for MongoDB
+    Basic firewall configuration patterns and examples for iptables on Linux systems.
+2.Configure Windows netsh Firewall for MongoDB
+    Basic firewall configuration patterns and examples for netsh on Windows systems.
+3.Configure mongod and mongos for TLS/SSL
+    TLS/SSL allows MongoDB clients to support encrypted connections to mongod instances.
+4.TLS/SSL Configuration for Clients
+    Configure clients to connect to MongoDB instances that use TLS/SSL.
+5.Upgrade a Cluster to Use TLS/SSL
+    Rolling upgrade process to use TLS/SSL.
+6.Configure MongoDB for FIPS
+    Configure for Federal Information Processing Standard (FIPS). 
+On Linux systems, the iptables interface provides access to the underlying netfilter firewall. On Windows systems, netsh command line interface provides access to the underlying Windows Firewall. For additional information about firewall configuration, see Configure Linux iptables Firewall for MongoDB and Configure Windows netsh Firewall for MongoDB.
+
+
+
+
+
+Virtual Private Networks
+
+Virtual private networks, or VPNs, make it possible to link two networks over an encrypted and limited-access trusted network. Typically, MongoDB users who use VPNs use TLS/SSL rather than IPSEC VPNs for performance issues.
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+Replication Introduction
+>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+Purpose of Replication
+
+>>Replication provides redundancy and increases data availability. With multiple copies of data on different database servers, replication protects a database from the loss of a single server. 
+
+>>Replication also allows you to recover from hardware failure and service interruptions. With additional copies of the data, you can dedicate one to disaster recovery, reporting, or backup.
+
+>>In some cases, you can use replication to increase read capacity. Clients have the ability to send read and write operations to different servers. You can also maintain copies in different data centers to increase the locality and availability of data for distributed applications.
+
+
+
+Replication in MongoDB
+
+>>A replica set is a group of mongod instances that host the same data set. One mongod, the primary, receives all write operations. All other instances, secondaries, apply operations from the primary so that they have the same data set.
+
+>>The primary accepts all write operations from clients. A replica set can have only one primary. To support replication, the primary records all changes to its data sets in its oplog. For more information on primary node operation, see Replica Set Primary.
+
+>>The secondaries replicate the primary’s oplog and apply the operations to their data sets such that the secondaries’ data sets reflect the primary’s data set. 
+
+>>If the primary is unavailable, the replica set will elect a secondary to be primary. For more information on secondary members, see Replica Set Secondary Members.
+
+>>You may add an extra mongod instance to a replica set as an arbiter. Arbiters do not maintain a data set. 
+
+>>The purpose of an arbiter is to maintain a quorum in a replica set by responding to heartbeat and election requests by other replica set members. Because they do not store a data set, arbiters can be a good way to provide replica set quorum functionality with a cheaper resource cost than a fully functional replica set member with a data set. 
+
+>>If your replica set has an even number of members, add an arbiter to obtain a majority of votes in an election for primary. Arbiters do not require dedicated hardware. For more information on arbiters, see Replica Set Arbiter.
+
+>>An arbiter will always be an arbiter whereas a primary may step down and become a secondary and a secondary may become the primary during an election.
+
+
+
+Asynchronous Replication
+
+>>Secondaries apply operations from the primary asynchronously. By applying operations after the primary, sets can continue to function despite the failure of one or more members.
+
+
+
+Automatic Failover
+
+>>When a primary does not communicate with the other members of the set for more than 10 seconds, the replica set will attempt to select another member to become the new primary. The first secondary that receives a majority of the votes becomes primary.
+
+
+
+Read Operations
+
+>>When a replica set has one and only one primary, reads from that primary provide strict consistency. [1]
+
+>>By default, clients read from the primary; however, clients can specify a read preference to send read operations to secondaries. Asynchronous replication to secondaries means that reads from secondaries may return data that does not reflect the state of the data on the primary. 
+
+>>For information on reading from replica sets, see Read Preference.
+
+>>In MongoDB, clients can see the results of writes before they are made durable:
+
+>>Regardless of write concern, other clients can see the result of the write operations before the write operation is acknowledged to the issuing client.
+    
+>>Clients can read data which may be subsequently rolled back.
+
+
+
+additionalfeatures
+>>>>>>>>>>>>>>>>>>
+
+>>Replica sets provide a number of options to support application needs. For example, you may deploy a replica set with members in multiple data centers, or control the outcome of elections by adjusting the priority of some members. 
+
+>>Replica sets also support dedicated members for reporting, disaster recovery, or backup functions
+

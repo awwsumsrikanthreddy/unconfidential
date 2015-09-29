@@ -1,0 +1,60 @@
+
+Mount file system of other server on your server via ssh using sshfs
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+prerequisites
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+on our server  
+
+ip = 192.168.56.115
+
+1.install sshfs
+2.create a directory for mounting
+3.get root credentials of 192.168.56.116
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+on other server 
+
+
+ip=192.168.56.116
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>>
+on our server
+>>>>>>>>>>>>>>>>>>>>>
+1.on debian and ubuntu systems:
+   
+  command: apt-get install sshfs
+to 
+  on centos systems:
+
+  command: rpm -ivh fuse-sshfs-1.8-1.el5.rf.i386.rpm
+
+2. command: mkdir /mnt/ssh
+
+3. command: sshfs root@192.168.56.116:/ /mnt/ssh/
+
+4. command: cd /mnt/ssh
+
+5. command: ls
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+permanently mount the device
+
+1. command: vim /etc/fstab
+
+   sshfs#root@10.233.10.212:/ /mnt/ssh fuse defaults 0 0
+
+2. command: mount -a
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+
+to unmount device
+
+1. command: umount /mnt/ssh
+

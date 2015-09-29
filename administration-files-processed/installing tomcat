@@ -1,0 +1,37 @@
+
+links:https://newpush.com/2011/10/how-to-install-tomcat-6-on-rhel-6-or-centos-6/
+
+
+
+installing tomcat
+
+
+1.yum install yum-priorities
+2.rpm -Uvh http://apt.sw.be/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
+3.rpm -Uvh http://download.fedora.redhat.com/pub/epel/6/x86_64/epel-release-6-5.noarch.rpm
+4.rpm -Uvh http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/jpackage-utils-5.0.0-7.jpp6.noarch.rpm
+5.yum -y install java
+6.yum -y install tomcat6 tomcat6-webapps tomcat6-admin-webapps
+7.service tomcat6 star
+8.http://127.0.0.1:8080/
+  
+
+
+files locations
+
+
+/etc/tomcat6 (this is where the main tomcat config files reside)
+/usr/share/doc/usr/share/tomcat6
+/usr/share/tomcat6/bin
+/usr/share/tomcat6/conf
+/usr/share/tomcat6/lib
+/usr/share/tomcat6/logs
+/usr/share/tomcat6/temp
+/usr/share/tomcat6/webapps
+/usr/share/tomcat6/work
+/var/cache/tomcat6
+/var/cache/tomcat6/temp
+/var/cache/tomcat6/work
+/var/lib/tomcat6 (this is where you will add and/or change most of your files)
+/var/lib/tomcat6/webapps
+/var/log/tomcat6

@@ -1,0 +1,242 @@
+Turning MongoDB Replica Set to a Sharded Cluster
+
+Replica Sets or Sharded Clusters?
+
+
+
+>>Replica Sets are a great way to replicate MongoDB data across multiple servers and have the database automatically failover in case of server failure. 
+
+>>Read workloads can be scaled by having clients directly connect to secondary instances. Note that master/slave MongoDB replication is not the same thing as a Replica Set, and does not have automatic failover.
+
+>>Since replication is asynchronous, the data on secondary instances might not be the latest.
+
+ 
+>>Sharding is a way to split data across multiple servers. In a MongoDB Sharded Cluster, the database will handle distribution of the data and dynamically load-balance queries. 
+
+>>So, if you have a high write workload, then sharding is the way to go. MongoDB uses a shard key to split collections and migrate the ‘chunks’ to the correct shard.
+
+>>It is important to pick a good shard key and avoid “hot spots”, so that data is evenly spread between shards and writes are also evenly distributed. In the picture below you see an example with two shards, each shard consists of a replica set.
+
+>>Migration from a Replica Set to a Sharded setup is pretty easy, but should not be done when the system is busy. The splitting/migration of chunks creates extra load, and can bring a busy system to a standstill.
+
+>>Additional configuration and routing processes are added to manage the data and query distribution. Config servers store the meta data for the sharded cluster, and are kept consistent by using a two phase commit. 
+
+>>Routers are the processes that clients connect to, and queries are then routed to the appropriate shard.
+
+>>Sharding does add some more complexity, since there are more processes to manage. However, if your performance is degrading and tuning of your application or your existing instances are not helping, then you probably need to look into sharding.
+
+ 
+Deploying a Replica Set:
+>>>>>>>>>>>>>>>>>>>>>>>>
+
+>>>We will deploy a replica set called rs0. This replica set will have as primary node mongo1 replicating to two secondary instances mongo2 and mongo3. Install MongoDB on all three servers. On each of MongoDB server, create a configuration file as below:
+
+$ vim /etc/mongodb.conf
+
+And add the following lines:
+
+# /etc/mongodb.conf
+# mongod server config file
+port = 27017
+dbpath = /data/mongodb/
+fork = true
+replSet = rs0
+logpath = /var/log/mongodb.log
+logappend = yes
+
+Create the Mongodb data directory:
+
+$ mkdir -p /data/mongodb
+
+Start the mongod process on every server:
+
+$ mongod -f /etc/mongodb.conf
+
+Connect to mongo shell and initiate replication on mongo1:
+
+mongo> rs.initiate()
+
+Add all replication members to the replica set:
+
+mongo> rs.add(“mongo1:27017”)
+mongo> rs.add(“mongo2:27017”)
+mongo> rs.add(“mongo3:27017”)
+
+New replica sets elect a primary within a few seconds. Check the replication status:
+
+mongo> rs.status()
+
+ 
+
+>>Check the status until you see the syncingTo value:
+
+"syncingTo" : "mongo1:27017"
+
+
+
+>>Import a test database from http://media.mongodb.org/zips.json into the replica set:
+
+$ wget http://media.mongodb.org/zips.json
+$ mongoimport --host rs0/mongo1:27017,mongo2:27017,mongo3:27017 --db mydb --collection zip --file zips.json
+
+At the moment, we have a replica set (rs0) with a database (mydb) and a collection (zip) on 3 servers (mongo1, mongo2,mongo3).
+
+ 
+Turning a Replica Set to a Sharded Cluster
+
+In a Sharded Cluster, another 2 new roles will be added: mongos and mongod config. mongos is a routing service for MongoDB Sharded Clusters, it determines the location of the data in the cluster, and forwards operations to the right shard. mongos requires mongod config, which stores the metadata of the cluster. All mongos instances must specify the mongod config hosts to the --configdb setting in the same order, and the mongos will read from the first config server (if it cannot connect to the config server, it will move on to the next on the list).
+
+Previously, our mongod replication instance listened on TCP port 27017. We are going to change this to listen to another port (27018) since mongos will take over port 27017 to serve queries from clients. mongod config will use port 27019 to serve the cluster metadata.
+
+ 
+Convert mongod Instances to Shard Servers
+
+We will now stop our mongod instances, change ports and activate sharding:
+
+$ killall -9 mongod
+
+To make configuration more simple, we will rename our configuration file from /etc/mongodb.conf to /etc/mongodb_shard.conf and add the following line:
+
+# /etc/mongodb_shard.conf
+# mongodb shard with replica set config file
+port = 27018
+dbpath = /data/mongodb/
+fork = true
+shardsvr = true
+replSet = rs0
+logpath = /var/log/mongodb.log
+logappend = yes
+
+ 
+Deploy Config Server
+
+Next, create a configuration file for mongod config, /etc/mongodb_config.conf and add the following lines:
+
+# /etc/mongodb_config.conf
+# mongod configdb server config file
+port = 27019
+dbpath = /data/configdb/
+fork = true
+configsvr = true
+logpath = /var/log/mongodb_config.log
+logappend = yes
+
+Make sure the mongod config data directory exists:
+
+$ mkdir -p /data/configdb
+
+Start the mongod config instance:
+
+$ mongod -f /etc/mongodb_config.conf
+
+ 
+Deploy mongos
+
+Create another configuration file for mongos, /etc/mongos.conf and add the following lines:
+
+# /etc/mongos.conf
+# mongos config file
+port = 27017
+configdb = mongo1:27019,mongo2:27019,mongo3:27019
+fork = true
+logpath = /var/log/mongos.log
+logappend = yes
+
+Start the mongos and mongod shard instances:
+
+$ mongos -f /etc/mongos.conf
+$ mongod -f /etc/mongodb_shard.conf
+
+ 
+Change Replica Set port configuration
+
+Our Replica Set is listening on port 27018. We need to change the replication setting on the primary mongod instance to this new port. Connect through mongo shell:
+
+$ mongo mongo1:27018
+
+And execute following command:
+
+mongo> use local
+mongo> cfg = db.system.replset.findOne({_id:"rs0"})
+mongo> cfg.members[0].host="mongo1:27018"
+mongo> cfg.members[1].host="mongo2:27018"
+mongo> cfg.members[2].host="mongo3:27018"
+mongo> db.system.replset.update({_id:"rs0"},cfg)
+
+Verify the replication status:
+
+mongo> rs.status()
+
+ 
+Add Replica Set to Sharded Cluster
+
+Add rs0 to our Shard Cluster by first connecting to mongos:
+
+$ mongo
+
+Then execute the following command:
+
+mongo> sh.addShard("rs0/mongo1:27018,mongo2:27018,mongo3:27018");
+
+Enable sharding on the database mydb that we imported earlier:
+
+mongo> sh.enableSharding("mydb")
+
+Verify the shard status:
+
+mongo> sh.status()
+--- Sharding Status ---
+  sharding version: {
+        "_id" : 1,
+        "version" : 3,
+        "minCompatibleVersion" : 3,
+        "currentVersion" : 4,
+        "clusterId" : ObjectId("51889fcbdf802ab88310f482")
+}
+  shards:
+        {  "_id" : "rs0",  "host" : "rs0/mongo1:27018,mongo2:27018,mongo3:27018" }
+  databases:
+        {  "_id" : "admin",  "partitioned" : false,  "primary" : "config" }
+        {  "_id" : "mydb",  "partitioned" : true,  "primary" : "rs0" }
+
+Now, our replica set (rs0) is running as a shard in our Sharded Cluster.
+
+ 
+Testing
+
+Connect through any of the mongos, lets say mongo2:
+
+$ mongo mongo2
+
+And try to query some data on database mydb and collection zip:
+
+mongo> use mydb
+mongo> db.zip.find()
+{ "city" : "ACMAR", "loc" : [ -86.51557, 33.584132 ], "pop" : 6055, "state" : "AL", "_id" : "35004" }
+{ "city" : "ADAMSVILLE", "loc" : [ -86.959727, 33.588437 ], "pop" : 10616, "state" : "AL", "_id" : "35005" }
+{ "city" : "ADGER", "loc" : [ -87.167455, 33.434277 ], "pop" : 3205, "state" : "AL", "_id" : "35006" }
+{ "city" : "KEYSTONE", "loc" : [ -86.812861, 33.236868 ], "pop" : 14218, "state" : "AL", "_id" : "35007" }
+{ "city" : "NEW SITE", "loc" : [ -85.951086, 32.941445 ], "pop" : 19942, "state" : "AL", "_id" : "35010" }
+{ "city" : "ALPINE", "loc" : [ -86.208934, 33.331165 ], "pop" : 3062, "state" : "AL", "_id" : "35014" }
+{ "city" : "ARAB", "loc" : [ -86.489638, 34.328339 ], "pop" : 13650, "state" : "AL", "_id" : "35016" }
+{ "city" : "BAILEYTON", "loc" : [ -86.621299, 34.268298 ], "pop" : 1781, "state" : "AL", "_id" : "35019" }
+{ "city" : "BESSEMER", "loc" : [ -86.947547, 33.409002 ], "pop" : 40549, "state" : "AL", "_id" : "35020" }
+{ "city" : "HUEYTOWN", "loc" : [ -86.999607, 33.414625 ], "pop" : 39677, "state" : "AL", "_id" : "35023" }
+{ "city" : "BLOUNTSVILLE", "loc" : [ -86.568628, 34.092937 ], "pop" : 9058, "state" : "AL", "_id" : "35031" }
+{ "city" : "BREMEN", "loc" : [ -87.004281, 33.973664 ], "pop" : 3448, "state" : "AL", "_id" : "35033" }
+{ "city" : "BRENT", "loc" : [ -87.211387, 32.93567 ], "pop" : 3791, "state" : "AL", "_id" : "35034" }
+{ "city" : "BRIERFIELD", "loc" : [ -86.951672, 33.042747 ], "pop" : 1282, "state" : "AL", "_id" : "35035" }
+{ "city" : "CALERA", "loc" : [ -86.755987, 33.1098 ], "pop" : 4675, "state" : "AL", "_id" : "35040" }
+{ "city" : "CENTREVILLE", "loc" : [ -87.11924, 32.950324 ], "pop" : 4902, "state" : "AL", "_id" : "35042" }
+{ "city" : "CHELSEA", "loc" : [ -86.614132, 33.371582 ], "pop" : 4781, "state" : "AL", "_id" : "35043" }
+{ "city" : "COOSA PINES", "loc" : [ -86.337622, 33.266928 ], "pop" : 7985, "state" : "AL", "_id" : "35044" }
+{ "city" : "CLANTON", "loc" : [ -86.642472, 32.835532 ], "pop" : 13990, "state" : "AL", "_id" : "35045" }
+{ "city" : "CLEVELAND", "loc" : [ -86.559355, 33.992106 ], "pop" : 2369, "state" : "AL", "_id" : "35049" }
+Type "it" for more
+
+ 
+
+Congratulations, you have now converted your MongoDB replica set into replicated Sharded Cluster! To add monitoring and cluster management to your Sharded Cluster, you can follow this post to install ClusterControl for MongoDB.
+
+ 
+

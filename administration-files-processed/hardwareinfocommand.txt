@@ -1,0 +1,12 @@
+1.lshw
+2.lscpu
+3.hwinfo
+4.lscpi
+5.lsusb
+6.lsblk
+7.df
+8.du
+9.dmidecode
+10.free
+11.hdparm
+12./proc

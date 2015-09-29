@@ -1,0 +1,58 @@
+what is vmlinuz 
+
+	
+>>vmlinuz is the name of the Linux kernel executable.
+
+>>A kernel is a program that constitutes the central core of a computer operating system. 
+
+>>It is the first thing that is loaded into memory (which physically consists of RAM chips) when a computer is booted up (i.e., started), and it remains in memory for the entire time that the computer is in operation. An executable, also called an executable file, is a file that can be run as a program.
+
+>>vmlinuz is a compressed Linux kernel, and it is bootable. Bootable means that it is capable of loading the operating system into memory so that the computer becomes usable and application programs can be run.
+
+>>vmlinuz should not be confused with vmlinux, which is the kernel in a non-compressed and non-bootable form. vmlinux is generally just an intermediate step to producing vmlinuz.
+
+>>vmlinuz is located in the /boot directory, which is the directory that contains the files needed to begin booting the system. 
+
+>>The file named vmlinuz might be the actual kernel executable itself, or it could be a link to the kernel executable, which might bear a name such as /boot/vmlinuz-2.4.18-19.8.0 (i.e., the name of the specific version of the kernel). 
+
+>>This can be easily determined by using the ls command (whose purpose is to list the contents of a specified directory) with its -l option (which tells ls to provide detailed information about each object in the specified directory) as follows:
+
+                                        
+                                              ls -l /boot
+
+>>If vmlinuz is an ordinary file (including an executable), the information about it in the first column will begin with a hyphen. If it is a link, it will begin with the letter l.
+
+>>The Linux kernel is compiled by issuing the following command:
+
+                                              make bzImage
+
+>>This results in the creation of a file named bzImage in a directory such as /usr/src/linux/arch/i386/linux/boot/.
+
+>>Compilation is the conversion the kernel's source code (i.e., the original form in which the kernel is written by a human) into object code (which is understandable directly by a computer's processor). 
+
+>>It is performed by a specialized program called a compiler, usually one in the GCC (GNU Compiler Collection).
+
+>>bzImage is then copied using the cp (i.e., copy) command to the /boot directory and simultaneously renamed vmlinuz with a command such as
+
+                          cp /usr/src/linux/arch/i386/linux/boot/bzImage /boot/vmlinuz
+
+>>vmlinuz is not merely a compressed image. It also has gzip decompressor code built into it. gzip is one of the most popular compression utilities on Unix-like operating systems.
+
+>>A compiled kernel named zImage file is created on some older systems and is retained on newer ones for backward compatibility. Both zImage and bzImage are compressed with gzip. 
+
+>>The difference is that zImage decompresses into low memory (i.e., the first 640kB), and bzImage decompresses into high memory (more than 1MB). 
+
+>>There is a common misconception that bzImage is compressed with the bzip2 utility; actually, the b just stands for big.
+
+>>The name vmlinuz is largely an accident of history. The kernel binary on the original UNIX as developed at Bell Labs was called unix. 
+
+>>When a new kernel containing support for virtual memory was subsequently written at the University of California at Berkeley (UCB), the kernel binary was renamed vmunix.
+
+>>Virtual memory is the use of space on a hard disk drive (HDD) to simulate additional RAM (random access memory) capacity. 
+
+>>It was supported by the Linux kernel almost from Linux's inception, in contrast to some other popular operating systems in use at the time, such as MS-DOS.
+
+>>Thus, it was a natural progression for the Linux kernel to be called vmlinux. And because the Linux kernel executable was made into a compressed file and compressed files typically have a z or gz extension on Unix-like systems, the name of the compressed kernel executable became vmlinuz.
+
+
+

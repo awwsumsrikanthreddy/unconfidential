@@ -1,0 +1,10 @@
+master and slave replication 
+
+link:http://docs.mongodb.org/manual/core/master-slave/
+
+link:http://docs.mongodb.org/manual/tutorial/deploy-replica-set/
+
+1.db.isMaster()
+
+2.db.adminCommand({shutdown : 1, force : true})
+

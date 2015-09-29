@@ -1,0 +1,76 @@
+The normal and usual configuration of puppet consists of a server (Puppet Master) and a client(Puppet agent).
+ 
+How Does Puppet Work?
+
+ 
+
+It works like this..Puppet agent is a daemon that runs on all the client servers(the servers where you require some configuration, or the servers which are going to be managed using puppet.)
+
+All the clients which are to be managed will have puppet agent installed on them, and are called nodes in puppet.
+Puppet Master: This machine contains all the configuration for different hosts. Puppet master will run as a daemon on this master server.
+Puppet Agent: This is the daemon that will run on all the servers, which are to be managed using puppet. Puppet agent will go and ask the configuration for itself from the puppet master server at a specific time interval.
+
+The connection between puppet agent and master is made in a secure encrypted channel with the help of SSL.
+
+If suppose the puppet agent has already applied the required configuration and there are no new changes then it will do nothing.
+
+Note: You can also manually ask puppet agent to go and fetch the configuration from the puppet master server whenever required. People manage puppet agent to fetch configuration through a cron. But managing puppet agent to automatically fetch data, by running it as a daemon on every node is a good idea.
+
+30 minutes is the default interval when puppet agent daemon will go and fetch config data from puppet master.
+
+working of puppet configuration management tool
+
+ 
+
+As shown in the above figure puppet master server has all the configuration options for Host 1(or call it the first node), Host 2(node 2),Host 3(node 3).
+
+An important fact to note is that it is the client(puppet agent or nodes) who go and fetches the configuration data from the puppet master server at a regular interval.
+
+Now there are multiple steps involved whenever a puppet agent of any node connects to a puppet master server for fetching data. These steps are mentioned below.
+
+Step 1: Whenever a client node connects to the master, the master server analyzes the configuration to be applied to the node, and how to apply that configs on the node.
+
+Step 2:Puppet master server Takes and collects all the resources and configurations to be applied to the node, and compiles it and make it a catalog. This catalog is given to the puppet agent of the node.
+
+Step 3: Puppet agent will apply the configuration on the node, according to the catalog, and then reply back, and submit the report of the configuration applied to the puppet master server.
+How does Puppet Work with Different Platforms?
+
+This is possible with the help of a tool called as Facter.
+
+Whenever the agent connects to the puppet master server for configuration data, Facter tool is used to give the complete details about the node(agent) to the puppet master.
+
+Facter will provide almost all information about the agent node. The information is very much detailed. See an example output of Facter below.
+
+[root@myvm1 ~]# facter
+architecture => i386
+augeasversion => 0.10.0
+boardmanufacturer => Intel Corporation
+boardproductname => 440BX Desktop Reference Platform
+boardserialnumber => None
+domain => sarath.com
+facterversion => 1.6.6
+fqdn => myvm1.sarath.com
+hardwareisa => i686
+hardwaremodel => i686
+hostname => myvm1
+id => root
+interfaces => eth0,lo,sit0
+ipaddress => 192.168.159.128
+ipaddress_eth0 => 192.168.159.128
+ipaddress_lo => 127.0.0.1
+is_virtual => true
+kernel => Linux
+kernelmajversion => 2.6
+kernelrelease => 2.6.18-128.el5
+kernelversion => 2.6.18
+lsbdistcodename => Tikanga
+
+the output of facter is much more detailed than the above example output shown.
+
+Puppet master gets the complete information about the node, and takes a decision with the help of that information on how to apply the configuration.
+
+For example if suppose the node is debian then to install a package puppet will use apt-get instead of yum.
+
+You can do stuff's like if the IP address is this, then apply this gateway to the server. And you can also add custom made facts to a node, and do configuration based on that fact(this makes puppet much more customizable).
+
+You require Facter tool to be installed on all the nodes, where you want to apply configuration using puppet. Without Facter, there is no way through which puppet server will get all information about the agent.

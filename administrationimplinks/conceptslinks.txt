@@ -1,0 +1,540 @@
+1.squid install and configure
+
+links:
+link1:  http://www.krizna.com/centos/how-to-install-squid-proxy-on-centos-6/
+link2:  http://kirtikumarpatel.blogspot.in/2014/04/how-to-install-and-configure-squid.html
+
+2.make linux pc as router
+
+links: 
+link1: http://www.tecmint.com/setup-linux-as-router/
+
+3.How to run Docker containers on CentOS or Fedora
+
+link: http://xmodulo.com/docker-containers-centos-fedora.html
+
+4.setup replica in mongodb
+
+link:http://xmodulo.com/setup-replica-set-mongodb.html
+
+5.install opensource own cloud
+
+link:http://xmodulo.com/install-configure-owncloud-debian.html
+
+6.installing tomcat6 
+
+links:
+
+link1: http://tecadmin.net/steps-to-install-tomcat-server-on-centos-rhel/
+
+
+link2: http://www.davidghedini.com/pg/entry/install_tomcat_7_on_centos
+
+link3: http:/log.zwiegnet.com/linux-server/install-tomcat-on-centos/
+
+link4: http://www.distrotips.com/centos/installing-tomcat-7-on-centos-6.html
+
+link5: http://www.unixmen.com/howto-install-tomcat-in-centos-fedora-the-easy-way/
+
+link6: https://newpush.com/2011/10/how-to-install-tomcat-6-on-rhel-6-or-centos-6/
+
+
+7.creating vlan and vlan pruning tutorial
+
+links:
+
+link1:http://computer.howstuffworks.com/lan-switch17.htm
+
+link2: http://www.9tut.com/vlan-trunk-protocol-vtp-tutorial
+
+
+
+8.mysql replication
+
+links:
+
+link1: http://www.tecmint.com/how-to-setup-mysql-master-slave-replication-in-rhel-centos-fedora/
+
+link2: http://learnlinuxchennai.blogspot.in/2013/01/mysql-masterslave-replication-on.html
+
+link3: http://shengzhonghua.cn/wordpress/mysql-replication-setup/
+
+link4:http://shengzhonghua.cn/wordpress/setup-multiple-mysql-instances-on-single-server/
+
+link5: http://www.cyberciti.biz/open-source/awesome-backup-software-for-linux-unix-osx-windows-systems/
+
+link6: http://www.elated.com/articles/mysql-for-absolute-beginners/
+
+
+
+9.linux admin backup tools
+
+link1: http://www.cyberciti.biz/open-source/awesome-backup-software-for-linux-unix-osx-windows-systems/
+
+
+link2:http://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/server-backup.html
+
+link3:;https://www.debian.org/doc/manuals/system-administrator/ch-sysadmin-backup.html
+
+link4:http://www.techrepublic.com/blog/10-things/10-outstanding-linux-backup-utilities/
+
+10.dbas hadoop mongodb oracle mysql
+
+ link: http://www.pythian.com/blog/hadoop-faq-but-what-about-the-dbas/
+
+11.http virtualhosts examples
+
+link1:http://httpd.apache.org/docs/2.2/vhosts/examples.html
+
+link2: http://secure.usadomains.com/billing/knowledgebase/1/Difference-between-Name-based-and-IP-based-hosting.html
+
+link3: http://lowagie.com/apache_virtualhosts
+
+12.iptables help
+
+link1: http://www.tecmint.com/basic-guide-on-iptables-linux-firewall-tips-commands/
+
+link2: http://www.howtogeek.com/177621/the-beginners-guide-to-iptables-the-linux-firewall/
+
+13.administration tasks examples new stufff
+
+link1: http://www.thegeekstuff.com/2010/12/50-unix-linux-sysadmin-tutorials/
+
+link2 http://www.thegeekstuff.com/2010/11/50-linux-commands/
+
+link3: http://artoflinux.blogspot.in/2008/07/iptables-tutorial-for-beginners.html
+
+14.important bsd distributions
+
+link: http://www.unixmen.com/important-bsd-distributions/
+
+15. filezilla issue sftp can acces whole server ftp
+
+link1: http://iswwwup.com/t/e2095e3158c9/jailed-user-can-access-dev-directory-under-sftp.html
+
+link2: http://iswwwup.com/t/d689d02c54aa/creating-ftp-user-to-access-a-specific-directory-with-sftp-in-linux-ub.html
+
+link3: http://iswwwup.com/t/766078cd6d0d/permissions-user-has-full-access-with-ftp-limited-access-with-sftp.html
+
+16.ftp gui
+
+link:http://ubuntuforums.org/showthread.php?t=79588&p=429783#post429783
+
+17.useradd parameters
+
+link:http://xyztutorials.com/
+
+18.miscellenous tutorials also for android
+
+link: http://xyztutorials.com/
+
+19.enable service at start up stop start restart in ubuntu
+
+link:http://askubuntu.com/questions/19320/how-to-enable-or-disable-services
+
+20.shell not loading perfectly or bashrc profile not loading properly
+
+link1: http://unix.stackexchange.com/questions/59327/centos-roothostname-does-not-show-anymore
+
+link2:
+http://unix.stackexchange.com/questions/31695/how-to-make-the-terminal-display-usermachine-in-bold-letters
+
+
+21.ftp important links
+
+link1: http://www.ducea.com/2006/07/27/allowing-ftp-access-to-files-outside-the-home-directory-chroot/
+link2:http://unix.stackexchange.com/questions/94603/limit-ftp-access-only-to-the-var-www-with-vsftpd
+link3:http://www.cyberciti.biz/tips/centos-redhat-vsftpd-ftp-with-virtual-users.html
+link4:http://ifzenelse.net/en/install-and-configure-your-very-secure-ftp-vsftp-server-centos-linux
+link5:http://ifzenelse.net/en/install-and-configure-your-very-secure-ftp-vsftp-server-centos-linux
+link6:https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-ftp-vsftpd-conf.html
+link7:http://www.cyberciti.biz/tips/vsftp-chroot-users-limit-to-only-their-home-directory.html
+link8:http://unix.stackexchange.com/questions/94603/limit-ftp-access-only-to-the-var-www-with-vsftpd
+link9:http://www.ducea.com/2006/07/27/allowing-ftp-access-to-files-outside-the-home-directory-chroot/
+link10:
+
+22.ftp virtual users with pam
+
+link 1:http://www.cyberciti.biz/tips/centos-redhat-vsftpd-ftp-with-virtual-users.html
+
+
+23.types of hosting
+
+link:http://www.tecmint.com/apache-ip-based-and-name-based-virtual-hosting/
+
+24. phpb and php my admin
+
+link:https://www.phpbb.com/support/docs/en/3.1/kb/article/transferring-your-board-to-a-new-host-or-domain/
+
+25.apache full fledged
+
+link : http://askubuntu.com/questions/474986/install-website-on-localhost
+
+26.dpkg cheat sheet
+
+link:http://www.cyberciti.biz/howto/question/linux/dpkg-cheat-sheet.php
+
+27:apache errors resolved help sites
+
+link1: http://askubuntu.com/questions/329323/problem-with-restarting-apache2
+
+and
+
+link2: http://askubuntu.com/questions/536128/apache2-start-error-when-using-php5-module-ubuntu-server 
+
+link3: http://askubuntu.com/questions/536128/apache2-start-error-when-using-php5-module-ubuntu-server
+
+
+28.setup virtual hosts on ubuntu
+
+link: https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-14-04-lts
+
+29.git tutorials point
+
+link:http://www.tutorialspoint.com/git/git_life_cycle.html
+
+30.ufw enable disable firewall
+
+link: https://help.ubuntu.com/community/UFW
+
+31.blog for ccna hardware and networking
+
+link: http://arvindccnanotes.blogspot.in/
+
+32.system admin interview questions
+
+link:http://arvindccnanotes.blogspot.in/2015/08/system-administrator-interview-questions.html
+
+
+33.ubuntu region location repo files
+
+link1: http://askubuntu.com/questions/586369/sudo-apt-get-update-not-working
+
+link2: http://repogen.simplylinux.ch/generate.php
+
+
+34.git tutorial
+
+link1: http://stackoverflow.com/questions/12236854/git-non-fast-forward-updates-were-rejected-merge-the-remote-changes
+
+link2: http://git-scm.com/book/en/v2
+
+link3: http://programmers.stackexchange.com/questions/119782/what-does-stage-mean-in-git
+
+
+35.git combo
+
+link1:https://try.github.io/levels/1/challenges/4
+
+link2:http://gitreal.codeschool.com/levels/1/challenges/3
+
+link3:https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup
+
+
+36.installing and working with ufw
+
+link: https://www.digitalocean.com/community/tutorials/how-to-setup-a-firewall-with-ufw-on-an-ubuntu-and-debian-cloud-server
+
+37.clean cache in ubuntu apt
+
+link:http://askubuntu.com/questions/65549/var-cache-apt-archives-occupying-huge-space
+
+
+38.apt repos for live cd
+
+link: http://askubuntu.com/questions/157840/why-does-apt-get-fail-to-resolve-the-mirror
+
+
+39.open source
+
+link:http://www.howopensource.com/2013/04/install-google-chrome-ubuntu-13-04-1210-deb/
+
+40.install php myadmin on ubuntu and centos
+
+ubuntu
+https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-12-04
+
+centos
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-a-centos-6-4-vps
+
+
+41.5 types of server infrastructures
+
+link: https://www.digitalocean.com/community/tutorials/5-common-server-setups-for-your-web-application
+
+
+42. reverse proxy
+
+link:http://stackoverflow.com/questions/224664/difference-between-proxy-server-and-reverse-proxy-server
+
+
+43.mysql clustering
+
+link1: http://www.houseoflinux.com/mysql/how-to-configure-a-mysql-cluster-on-centos-redhat/
+
+link2: http://blog.secaserver.com/2012/11/centos-6-install-mysql-cluster-the-simple-way/
+
+link3: http://blog.royalcyber.com/two-nodes-mysql-cluster-on-centos-6-5-64-bit/
+
+link4: http://blog.royalcyber.com/two-nodes-mysql-cluster-on-centos-6-5-64-bit/
+
+
+44.difference between ssl and ssh
+
+link: http://security.stackexchange.com/questions/1599/what-is-the-difference-between-ssl-vs-ssh-which-is-more-secure
+
+
+45.php apache eclipse openssh
+
+link:http://dev.antoinesolutions.com/openssl
+
+
+46.ftp parameters
+
+link:https://sachinsharm.wordpress.com/2015/03/08/installsetup-and-configure-ftp-on-centosrhelamazon-linux/
+
+47.ftp paramters enable disable users for read write and anonymous
+
+link: http://ifzenelse.net/en/install-and-configure-your-very-secure-ftp-vsftp-server-centos-linux
+
+link:https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-ftp-vsftpd-conf.html
+
+
+48.chroot your install
+
+link:http://superuser.com/questions/111152/whats-the-proper-way-to-prepare-chroot-to-recover-a-broken-linux-installation
+
+49.useradd parameters
+
+link:http://www.linfo.org/useradd.html
+
+50.http load balancer
+
+link:https://nsdg.gov.in/manual/ApacheLoadBalancer.pdf
+
+51.apache clustering
+
+link:http://www.tokiwinter.com/building-a-highly-available-apache-cluster-on-centos-7/
+
+
+52.git with docker
+
+link1:https://docs.docker.com/userguide/dockerrepos/
+link2:https://docs.docker.com/introduction/understanding-docker/
+link3:http://stackoverflow.com/questions/22105368/how-docker-is-better-than-vagrantlxcchef
+
+
+53.device mapper explanation
+
+link:http://unixadminschool.com/blog/2011/11/linux-understand-device-mapper-and-dm-multipath
+
+54.aufs union of file system
+
+link:http://www.thegeekstuff.com/2013/05/linux-aufs/
+
+
+55.journey of deployments
+
+link:https://www.airpair.com/docker/posts/the-painful-journey-of-painless-deployments
+
+56.difference between chef docker vagrant 
+
+link:http://www.quora.com/What-is-difference-between-docker-puppet-chef-and-vagrant
+link:http://stackoverflow.com/questions/21498832/in-docker-whats-the-difference-between-a-container-and-an-image
+
+57:online courses
+
+link:https://www.udemy.com/courses/featured/?pmtag=KEEPCOOL1110&siteID=AfpokvaRFDA-ZEj1jrUs.6S96..NFlUvCQ&LSNPUBID=AfpokvaRFDA
+
+58:how docker works
+
+link1:http://devopscube.com/what-is-docker/
+
+link2:https://docs.docker.com/introduction/understanding-docker/
+
+59.about nautilus
+
+link:http://www.howtogeek.com/193071/how-to-open-the-ubuntu-nautilus-file-browser-from-the-terminal/
+
+60.steps to build rpms
+
+link:http://crashcourse.ca/content/working-source-rpms-under-centos
+
+61.mariadb clustering
+
+link:http://www.unixmen.com/setup-mariadb-master-slave-replication-in-centos-7/
+
+62:vagrant provision
+
+links:
+
+link:https://docs.vagrantup.com/v2/getting-started/provisioning.html
+
+link:https://docs.vagrantup.com/v2/getting-started/project_setup.html
+
+link: http://www.andrew-kirkpatrick.com/2013/04/where-does-vagrant-box-get-downloaded-to/
+
+link:http://superuser.com/questions/584100/why-should-i-use-vagrant-instead-of-just-virtualbox
+
+link: www.sitepoint.com/full-stack-developer/
+
+63:puppet description
+
+link: http://www.slashroot.in/puppet-tutorial-introduction-puppet-configuration-management-tool
+
+64:57 important admin things
+
+link:http://www.gfi.com/blog/57-tips-admin/
+
+65.site vagrant web design redis
+
+link: www.sitepoint.com/full-stack-developer/
+
+66.mysql clustering
+
+links:
+
+link1: http://blog.secaserver.com/2012/11/centos-6-install-mysql-cluster-the-simple-way/
+
+
+link2:http://www.freeos.com/guides/lsst/ch03sec07.html
+
+
+link3:https://dev.mysql.com/doc/refman/5.6/en/mysql-cluster-installation.html
+
+
+67.kickstart links 
+
+link1:https://devopslab.wordpress.com/2014/07/23/install-linux-centos-7-with-kickstart-on-virtualbox/
+
+link2:http://www.server-world.info/en/note?os=CentOS_6&p=pxe&f=3
+
+link3:http://www.tecmint.com/multiple-centos-installations-using-kickstart/
+
+link4:http://geekpeek.net/kickstart-file-centos/
+
+link5:https://lonesysadmin.net/2013/12/04/minimal-kickstart-file-red-hat-enterprise-linux-6-centos-6-oracle-linux-6-virtual-machines/
+
+link6:https://www.andrewzammit.com/blog/install-centos-6-with-anaconda-kickstart-esxi-vmware-tools/
+
+link7:https://gist.github.com/nemf/3109649
+
+link8:http://stackoverflow.com/questions/18999766/automate-installation-of-centos-6-4-minimal-with-kickstart-on-a-dvd
+
+link9:https://www.centosblog.com/centos-7-minimal-kickstart-file/
+
+link10:http://www.zerodev.it/automating-centos-netinstall-with-kickstart-and-remastering.html
+
+link11:https://devopslab.wordpress.com/2014/07/23/install-linux-centos-7-with-kickstart-on-virtualbox/
+
+link12:http://www.server-world.info/en/note?os=CentOS_6&p=pxe&f=3
+
+link13:http://www.tecmint.com/multiple-centos-installations-using-kickstart/
+
+link14:http://geekpeek.net/kickstart-file-centos/
+
+link15:https://lonesysadmin.net/2013/12/04/minimal-kickstart-file-red-hat-enterprise-linux-6-centos-6-oracle-linux-6-virtual-machines/
+
+link16:https://www.andrewzammit.com/blog/install-centos-6-with-anaconda-kickstart-esxi-vmware-tools/
+
+link17:https://gist.github.com/nemf/3109649
+
+link18:http://stackoverflow.com/questions/18999766/automate-installation-of-centos-6-4-minimal-with-kickstart-on-a-dvd
+
+link19:https://www.centosblog.com/centos-7-minimal-kickstart-file/
+
+link20:http://www.zerodev.it/automating-centos-netinstall-with-kickstart-and-remastering.html
+
+link21:http://www.smtps.net/pxe-kickstart.html
+
+link22:https://www.centos.org/docs/5/html/Installation_Guide-en-US/ch-redhat-config-kickstart.html
+
+link23:https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/3/html/System_Administration_Guide/s1-kickstart2-startinginstall.html
+
+link24:link: https://mikent.wordpress.com/2012/04/12/how-to-install-linux-redhat-5-x-or-6-x-using-kickstart-over-http-or-cd-rom-or-iso/
+
+link25: https://lonesysadmin.net/2013/12/04/minimal-kickstart-file-red-hat-enterprise-linux-6-centos-6-oracle-linux-6-virtual-machines/
+
+link26: http://venkataraoss.blogspot.co.uk/2011/02/kickstart-server-in-10-steps.html
+
+link27:http://modlearning.com/centos/building-a-kickstart-server-red-hat-centos-6/
+
+link28:http://how-to.linuxcareer.com/automating-linux-installations-with-kickstart
+
+link29:http://www.linuxexplorers.com/2012/03/red-hat-enterprise-linux-6-kickstart-installation-via-http/
+
+link30:http://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/
+
+link31:http://venkataraoss.blogspot.in/2011/02/kickstart-server-in-10-steps.html
+
+link32:http://landoflinux.com/linux_kickstart_introduction.html
+
+link33:http://ktaraghi.blogspot.in/2012/09/automated-installation-of-centos-6x-and.html
+
+http34://www.tecmint.com/multiple-centos-installations-using-kickstart/
+
+
+68.install oracle through  kickstart
+
+link: http://docs.oracle.com/cd/E37670_01/E41137/html/ch03s02.html
+
+
+69.kickstart pxe booting
+
+link1:http://www.bgevolution.com/blog/pxe-network-boot-virtualbox/
+
+link2:http://serverfault.com/questions/617352/pxe-boot-with-virtualbox
+
+link3:http://reboot.pro/topic/9901-pxe-booting-in-virtualbox/
+
+link4:http://superuser.com/questions/448700/setting-up-virtualbox-guest-for-pxe-boot
+
+link5:http://superuser.com/questions/524034/test-pxe-using-virtualbox?rq=1
+
+70.what is clonezilla
+
+link:http://clonezilla.org/
+
+
+71.setting up thin client (Linux Terminal Server Project)ltsp server
+
+link:http://www.bgevolution.com/blog/pxe-boot-thin-client-ltsp-config/
+
+
+72.tftp with kickstart
+
+link:https://www.centos.org/docs/5/html/Installation_Guide-en-US/ch-pxe.html
+
+link:https://www.centos.org/docs/5/html/Installation_Guide-en-US/ch-pxe.html
+
+link:http://www.tecmint.com/install-pxe-network-boot-server-in-centos-7/
+
+73.ubuntu start service at boot
+
+update-rc.d apache2 defaults
+
+link:http://askubuntu.com/questions/9382/how-can-i-configure-a-service-to-run-at-startup
+
+74.switch between servercore and server gui
+
+link:http://blogs.technet.com/b/puneetvig/archive/2012/10/16/switch-between-full-and-core-in-windows-server-2012-using-powershell-3-0.aspx
+
+75.30 Things to Do After Minimal RHEL/CentOS 7 Installation
+
+link:http://www.tecmint.com/things-to-do-after-minimal-rhel-centos-7-installation/
+
+76.kickstart tftp working pxe for virtualbox
+
+link: https://gist.github.com/jtyr/816e46c2c5d9345bd6c9
+
+77.netcat utility important send data via network swiss army knife networking tools
+
+link:https://www.digitalocean.com/community/tutorials/how-to-use-netcat-to-establish-and-test-tcp-and-udp-connections-on-a-vps
+
+78.important concept about libraries ldd
+
+link: http://www.cyberciti.biz/tips/linux-shared-library-management.html
+
+
+79.

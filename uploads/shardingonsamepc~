@@ -1,0 +1,186 @@
+HOW TO CONFIGURE MONGODB SHARDING ON UBUNTU STANDALONE (SINGLE PC)
+
+STEP1: EDIT Configuration file i.e /etc/mongod.conf
+
+
+sampleconfiguration
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+# mongod.conf
+
+# Where to store the data.
+
+# Note: if you run mongodb as a non-root user (recommended) you may
+# need to create and set permissions for this directory manually,
+# e.g., if the parent directory isn't mutable by the mongodb user.
+dbpath=/data/db1
+dbpath=/data/db2
+
+
+#where to log
+
+logpath=/var/log/mongodb/mongod.log
+logpath=/var/log/mongodb/mongod1.log
+logpath=/var/log/mongodb/mongod2.log
+logappend=true
+
+port = 27017
+port = 37017
+# Listen to local interface only. Comment out to listen on all interfaces. 
+bind_ip = 127.0.0.1
+
+# Disables write-ahead journaling
+# nojournal = true
+
+# Enables periodic logging of CPU utilization and I/O wait
+#cpu = true
+
+# Turn on/off security.  Off is currently the default
+#noauth = true
+auth = true
+
+# Verbose logging output.
+#verbose = true
+
+# Inspect all client data for validity on receipt (useful for
+# developing drivers)
+#objcheck = true
+
+# Enable db quota management
+#quota = true
+
+# Set oplogging level where n is
+#   0=off (default)
+#   1=W
+#   2=R
+#   3=both
+#   7=W+some reads
+#diaglog = 0
+
+# Ignore query hints
+#nohints = true
+
+# Enable the HTTP interface (Defaults to port 28017).
+#httpinterface = true
+
+# Turns off server-side scripting.  This will result in greatly limited
+# functionality
+#noscripting = true
+
+# Turns off table scans.  Any query that would do a table scan fails.
+#notablescan = true
+
+# Disable data file preallocation.
+#noprealloc = true
+
+# Specify .ns file size for new databases.
+# nssize = <size>
+
+# Replication Options
+
+# in replicated mongo databases, specify the replica set name here
+# maximum size in megabytes for replication operation log
+#oplogSize=1024
+# path to a key file storing authentication info for connections
+# between replica set members
+#keyFile=/path/to/keyfile
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+STEP2: start master 
+
+mongod --master --dbpath /data/db1 --port 30000
+
+or 
+
+mongod --master --dbpath /data/db1 --port 30000 & >>>>>>>>>if u want to run in background use this command
+
+
+STEP3: start slave
+
+mongo --slave --source localhost:30000 --dbpath /data/db2 --port 30001
+
+
+STEP4: access master db using following command
+
+mongod --port 30000
+
+
+STEP5: now when u are accessing master db, make it master for real using following command
+
+db.isMaster()
+
+
+STEP6: now shutdown both master and slave process running not by killing but by using following command
+
+db.adminCommand({shutdown : 1, force : true})
+
+STEP7: now invoke replicaset using following command
+
+mongod --replSet rs0 --logpath /var/log/mongodb/mongod1.log --dbpath /data/db1 --port 30000
+
+STEP8: now initiate replica set by using following command
+
+rs.initiate()
+
+STEP9: check for status of replication using following command
+
+rs.conf()
+rs.config()
+db.serverStatus()
+
+STEP10: now initiate the other member of replica set by using following command running on 30001 port
+
+mongod --replSet rs0 --logpath /var/log/mongodb/mongod2.log --dbpath /data/db2 --port 30001
+
+STEP11: now on master or the instance of mongodb on port 30000,we should add the other member (slave=30001)
+
+rs.add("lsn-del-007:30001")
+
+STEP12: now check replication status on both primary and secondary
+
+rs.conf()
+rs.config()
+db.serverStatus()
+db.printReplicationInfo()
+db.printSlaveReplicationInfo()
+
+STEP13: check what processes are running in background for mongodb
+
+ps -ef | grep 'mongo'
+
+
+now, as we have completed creating a replicaset consisting of a primary and secondary
+
+STEP14: create data directory for  config server instance. (in real scenario we may have 3 config servers atleast)
+
+
+mkdir /data/configdb
+
+
+STEP15:Start the the config server instance. Start  by issuing a command using the following syntax: 27019.we can also use different port.
+but the default port for config servers is 27019
+
+mongod --configsvr --dbpath /data/configdb --port 27019
+
+
+STEP16:start the mongos instance (Query Router or mongo instance) 
+
+mongos --configdb  localhost:27019 
+
+or
+
+mongos --configdb hostname:27019
+
+
+STEP17:A shard can be a standalone mongod or a replica set. In a production environment, each shard should be a replica set.
+( if a mongos is accessible at mongos0.example.net on port 27017, issue the following command )
+
+mongo --host localhost --port 27017
+
+
+
+
+
+
+

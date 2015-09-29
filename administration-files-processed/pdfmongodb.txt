@@ -1,0 +1,1 @@
+link: http://docs.mongodb.org/v2.6/MongoDB-sharding-guide.pdf

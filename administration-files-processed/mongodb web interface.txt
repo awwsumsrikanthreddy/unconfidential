@@ -1,0 +1,10 @@
+mongodb web interface
+
+1.vim /etc/mongodb.conf
+
+httpinterface=true
+bind_ip=127.0.0.1,192.168.56.116
+
+2.service mongod restart
+
+

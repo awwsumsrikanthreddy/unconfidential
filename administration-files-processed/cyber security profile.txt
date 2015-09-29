@@ -1,0 +1,71 @@
+cyber security
+
+
+    35
+    Crisis Management
+    32
+    Physical Security
+    29
+    Security Audits
+    29
+    PCI DSS
+    29
+    Computer Security
+    19
+    Banking
+    17
+    Policy
+    16
+    Cybercrime
+    13
+    Training
+    11
+    Security Management
+    11
+    Enterprise Risk...
+    10
+    Business Continuity
+    9
+    Vulnerability Assessment
+    9
+    Enforcement
+    7
+    Law Enforcement
+    7
+    Data Security
+    5
+    Cyber Security
+    4
+    Information Technology
+    3
+    Investigations
+    3
+    Fraud Prevention
+    3
+    Governance
+    3
+    Police
+    2
+    Risk
+    2
+    Operational Risk...
+    2
+    Privacy Law
+    2
+    Network Security
+    2
+    COBIT
+    1
+    Privacy
+    1
+    Penetration Testing
+    1
+    Risk Analysis
+    1
+    IT Audit
+    1
+    Business Continuity...
+    1
+    AML
+    1
+    ISO 27001

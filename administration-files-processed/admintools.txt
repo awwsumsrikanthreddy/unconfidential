@@ -1,0 +1,26 @@
+0.uptime
+1.free
+2.vmstat
+3.iostat
+4.ps
+5.w
+6.top
+7.sar
+8.mpstat
+9.pmap
+10.netstat
+11.iptraf
+12.tcpdump
+13.strace
+14./proc
+15.nagios
+16.cacti
+17.KDE systemguard
+18.gnome system monitor
+19.nmap
+20.lsof
+21.conky
+22.ntop
+23.htop
+24.mtr
+25.GKrellm

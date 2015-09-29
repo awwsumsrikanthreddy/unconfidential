@@ -1,0 +1,284 @@
+How to Install MongoDB from Source (and using YUM) on Linux
+
+
+>>The name MongoDB was derived from Humongous DB.
+
+>>It is an open source NoSQL database. MongoDB is developed and commercially supported by the company 10gen.
+
+>>The focus of the MongoDB is on scalability and performance. MongoDB is a schema-free document-oriented database. This stores data as JSON objects. 
+
+>>Unlike traditional SQL database, you don’t need to define a schema. The schema is embedded in the data document itself, making it easy for you to change the schema at anytime without worrying about changing any of the previous documents that are loaded. 
+
+>>High performance and scalability are possible because there are no joins, and no multi-document transactions performed on MongoDB. This also provides replication across servers with the ability to fail-over automatically. You can also scale across servers for high availability.
+
+>>This article is the 1st part in a series of articles on MongoDB.
+
+Install MongoDB using YUM
+
+Installing MongoDB using yum is fairly straight forward.
+
+
+
+1.Setup 10gen Yum Repository
+
+First, add 10gen Repository to your yum as shown below.
+
+command: # vi /etc/yum.repos.d/10gen.repo
+[10gen]
+name=10gen Repository
+baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64
+gpgcheck=0
+enabled=1
+
+Note: The above is for a 64-bit system. If you are using 32-bit system, point the baseurl in the above file to http://downloads-distro.mongodb.org/repo/redhat/os/i686
+
+
+2.Now, execute “yum info” to view the mongo-10gen and mongo-10gen-server packages.
+
+command: # yum info mongo-10gen
+Name        : mongo-10gen
+Arch        : x86_64
+Version     : 2.2.2
+Release     : mongodb_1
+Size        : 43 M
+Repo        : 10gen
+Summary     : mongo client shell and tools
+URL         : http://www.mongodb.org
+License     : AGPL 3.0
+
+3.command: # yum info mongo-10gen-server
+Name        : mongo-10gen-server
+Arch        : x86_64
+Version     : 2.2.2
+Release     : mongodb_1
+Size        : 6.7 M
+Repo        : 10gen
+Summary     : mongo server, sharding server, and support scripts
+URL         : http://www.mongodb.org
+License     : AGPL 3.0
+
+4.Install Mongo Client and Server Packages
+
+Install these two mongo-* packages as shown below.
+
+ command: # yum install mongo-10gen mongo-10gen-server
+  Installing : mongo-10gen-2.2.2-mongodb_1.x86_64
+  Installing : mongo-10gen-server-2.2.2-mongodb_1.x86_64
+
+
+>>Verify mongod.conf file
+
+>>This also installs the default /etc/mongod.conf file, and the startup script /etc/rc.d/init.d/mongod
+
+>>The /etc/mongod.conf file contains the following default values. As you see here, the mongo database files will be created under /var/lib/mongo directory. 
+
+>>If you want the DB files to be created under different directory, change the dbpath directory in mongod.conf file.
+
+command: # cat /etc/mongod.conf
+
+logpath=/var/log/mongo/mongod.log
+logappend=true
+fork = true
+dbpath=/var/lib/mongo
+pidfilepath = /var/run/mongodb/mongod.pid
+
+>>Start MongoDB server
+
+>>Start the mongod service as shown below.
+
+command: # service mongod start
+
+Starting mongod: forked process: 15968
+all output going to: /var/log/mongo/mongod.log
+child process started successfully, parent exiting
+
+View the log files to make sure MongoDB started successfully. By default MongoDB server runs on port 27017.
+
+command: # cat /var/log/mongo/mongod.log
+
+Sat Jan 19 10:57:03 [initandlisten] MongoDB starting : pid=15968 port=27017 dbpath=/var/lib/mongo 64-bit host=centos
+Sat Jan 19 10:57:03 [initandlisten] db version v2.2.2, pdfile version 4.5
+Sat Jan 19 10:57:03 [initandlisten] git version: d1b43b61a5308c4ad0679d34b262c5af9d664267
+Sat Jan 19 10:57:03 [initandlisten] build info: Linux ip-10-2-29-40 2.6.21.7-2.ec2.v1.2.fc8xen #1 SMP Fri Nov 20 17:48:28 EST 2009 x86_64 BOOST_LIB_VERSION=1_49
+Sat Jan 19 10:57:03 [initandlisten] options: { config: "/etc/mongod.conf", dbpath: "/var/lib/mongo", fork: "true", logappend: "true", logpath: "/var/log/mongo/mongod.log", pidfilepath: "/var/run/mongodb/mongod.pid" }
+Sat Jan 19 10:57:03 [initandlisten] journal dir=/var/lib/mongo/journal
+Sat Jan 19 10:57:03 [initandlisten] recover : no journal files present, no recovery needed
+Sat Jan 19 10:57:03 [websvr] admin web console waiting for connections on port 28017
+Sat Jan 19 10:57:03 [initandlisten] waiting for connections on port 27017
+
+>>Use Mongo Shell to connect to MongoDB
+
+>>Type “mongo” to launch the mongo shell and connect to MongoDB to perform some database operation. This will display the “> ” prompt where you can type mongo client commands.
+
+
+command: # mongo
+MongoDB shell version: 2.2.2
+connecting to: test
+Welcome to the MongoDB shell.
+
+>
+
+>>>>>The following command will insert a sample document into the MongoDB collection called “sites”. This is similar to “INSERT into” SQL command.
+
+> doc1 = { name : "ramesh" };
+> db.sites.insert( doc1 );
+
+>>>>>The following will display all the documents in the MongoDB “sites” collection. This is similar to the “SELECT * from” SQL command.
+
+> db.sites.find()
+{ "_id" : ObjectId("50f72809a8e3c7a3aba2bf15"), "name" : "ramesh" }
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+Install MongoDB from Source
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+
+
+>>If you like to install MongoDB from source, follow the steps mentioned below.
+
+1.Install Pre-Reqs
+
+>>Make sure gcc-c++, and glibc-devel package are already installed. MongoDB uses scons to build the source-code. So, make sure scons package is already installed.
+
+command: # rpm -qa | egrep 'gcc-c++|glibc-devel|scons'
+
+gcc-c++-4.4.6-4.el6.x86_64
+glibc-devel-2.12-1.80.el6_3.6.x86_64
+scons-2.0.1-1.el6.noarch
+
+>>If you don’t have these pre-req, install it.
+
+command: # yum install gcc-c++ glibc-devel scons
+
+
+>>Download MongoDB
+
+>>Go to MongoDB downloads page, and download the source code. The current stable version of MongoDB is 2.2.2.
+
+>>Once you have the download link, you can also use wget to directly download the source code.
+
+command: cd /usr/src
+command: wget http://downloads.mongodb.org/src/mongodb-src-r2.2.2.tar.gz
+command: tar xvfz mongodb-src-r2.2.2.tar.gz
+command: cd mongodb-src-r2.2.2
+
+>>Build MongoDB using Scons
+
+>>Scons is similar to make. Type “scons all” to build the MongoDB from source.
+
+>>Please note that when you execute “scons all”, it uses only one CPU and run only one job at a time to build the source code. So, it will be slow. If you want scons to use all the CPU and run multiple jobs while building, you should specify the number of jobs it should execute.
+
+>>On my system, I have 8 cores. So, I executed “scons -j 8 all” as shown below to build.
+
+command: # scons -j 8 all
+
+scons: Reading SConscript files ...
+scons version: 2.0.1
+python version: 2 6 6 'final' 0
+Checking whether the C++ compiler works(cached) yes
+Checking for C header file unistd.h... (cached) yes
+Checking whether clock_gettime is declared... (cached) yes
+Checking for C library rt... (cached) yes
+Checking for C++ header file execinfo.h... (cached) yes
+Checking whether backtrace is declared... (cached) yes
+Checking whether backtrace_symbols is declared... (cached) yes
+Checking for C library pcap... (cached) no
+Checking for C library wpcap... (cached) no
+Checking if __malloc_hook is declared volatile... (cached) no
+scons: done reading SConscript files.
+..
+Install file: "build/linux2/normal/mongo/test" as "test"
+scons: done building targets.
+
+>>Once you’ve build the source code, we should install it. Use “scons install” to install MongoDB. By default it will install it under /usr/local/bin. 
+
+>>If you like to install MongoDB under a different directory, use “–prefix” option.
+
+>>To install MongoDB under /opt/mongo directory, execute the following scons command.
+
+command: # scons --prefix=/opt/mongo install
+
+
+As you see below, it has installed MongoDB under /opt/mongo directory.
+
+command: # ls -l /opt/mongo/
+
+total 12
+drwxr-xr-x. 2 root root 4096 Jan 19 13:33 bin
+drwxr-xr-x. 3 root root 4096 Jan 19 13:33 include
+drwxr-xr-x. 2 root root 4096 Jan 19 13:33 lib
+
+>>Create /etc/mongod.conf file
+
+>>Create the following configuration file which will be used by MongoDB server during startup.
+
+command: # cat /etc/mongod.conf
+
+logpath=/var/log/mongo/mongod.log
+logappend=true
+fork = true
+dbpath=/var/lib/mongo
+pidfilepath = /var/run/mongodb/mongod.pid
+
+>>In the above file, the dbpath parameter indicates that when we start MongoDB database, it will create any required databases under /var/lib/mongo directory. You can change this path accordingly.
+
+>>Create the directory refered by the dbpath.
+
+command: # mkdir -p /var/lib/mongo
+
+
+>>Start the MongoDB Daemon
+
+>>Add /opt/mongo/bin/ to the PATH variable.
+
+command: # export $PATH=$PATH:/opt/mongo/bin/
+
+
+>>Start the mongodb as shown below by passing the config file location using -f option.
+
+command: # mongod -f /etc/mongod.conf
+
+forked process: 20127
+all output going to: /var/log/mongo/mongod.log
+child process started successfully, parent exiting
+
+>>If you just use “mongod” without any argument, it will start the process in the foreground. When you close your terminal, your MongoDB server will also stop. So, make sure to execute mongod with -f option as shown above.
+
+>>Verify the log files to make sure it started properly. By default MongoDB server runs on port 27017.
+
+command: # cat /var/log/mongo/mongod.log
+
+Sat Jan 19 13:48:44 [initandlisten] MongoDB starting : pid=20127 port=27017 dbpath=/var/lib/mongo 64-bit host=centos
+Sat Jan 19 13:48:44 [initandlisten] db version v2.2.2, pdfile version 4.5
+Sat Jan 19 13:48:44 [initandlisten] git version: nogitversion
+Sat Jan 19 13:48:44 [initandlisten] build info: Linux centos 2.6.32-279.19.1.el6.x86_64 #1 SMP Wed Dec 19 07:05:20 UTC 2012 x86_64 BOOST_LIB_VERSION=1_49
+Sat Jan 19 13:48:44 [initandlisten] options: { config: "/etc/mongod.conf", dbpath: "/var/lib/mongo", fork: "true", logappend: "true", logpath: "/var/log/mongo/mongod.log", pidfilepath: "/var/run/mongodb/mongod.pid" }
+Sat Jan 19 13:48:44 [initandlisten] journal dir=/var/lib/mongo/journal
+Sat Jan 19 13:48:44 [initandlisten] recover : no journal files present, no recovery needed
+Sat Jan 19 13:48:44 [websvr] admin web console waiting for connections on port 28017
+Sat Jan 19 13:48:44 [initandlisten] waiting for connections on port 27017
+
+
+>>Use Mongo Shell to connect to MongoDB
+
+>>Type “mongo” to launch the mongo shell and connect to MongoDB to perform some database operation. This will display the “> ” prompt where you can type mongo client commands.
+
+command: # mongo
+MongoDB shell version: 2.2.2
+connecting to: test
+Welcome to the MongoDB shell.
+>
+
+>>>>>>The following command will insert a sample document into the MongoDB collection called “sites”. This is similar to “INSERT into” SQL command.
+
+> doc1 = { name : "ramesh" };
+> db.sites.insert( doc1 );
+
+>>>>>>>>>>>>>>>>>>The following will display all the documents in the MongoDB “sites” collection. This is similar to the “SELECT * from” SQL command.
+
+> db.sites.find()
+{ "_id" : ObjectId("50f72809a8e3c7a3aba2bf15"), "name" : "ramesh" }
+
+In the next article of this series, we’ll explain several MongoDB commands with examples.

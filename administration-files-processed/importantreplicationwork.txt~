@@ -1,0 +1,56 @@
+replication process
+>>>>>>>>>>>>>>>>>>>
+
+link: http://docs.mongodb.org/manual/core/master-slave/
+
+link:http://docs.mongodb.org/master/tutorial/convert-replica-set-to-replicated-shard-cluster/
+
+link: http://docs.mongodb.org/master/tutorial/convert-replica-set-to-replicated-shard-cluster/#convert-setup-initial-set
+
+link: http://docs.mongodb.org/v3.0/reference/method/rs.add/
+
+link: https://docs.mongodb.org/v3.0/tutorial/reconfigure-replica-set-with-unavailable-members/
+
+
+on master
+>>>>>>>>>
+
+mongod --master --dbpath /var/lib/mongo
+
+onslave
+>>>>>>>>
+
+mongod --slave --source mongodb1:27017 --dbpath /var/lib/mongo
+
+
+onmaster`
+>>>>>>>>>
+
+db.isMaster()
+
+to shutdown db
+
+db.adminCommand({shutdown : 1, force : true})
+
+or 
+
+rs.stepDown(60)
+
+mongod --replSet <setname>
+
+
+mongod --replSet rs0 --logpath /var/log/mongodb/mongod.log --dbpath /data/db1 --port 27017
+
+rs.initiate()
+
+rs.status()
+
+
+on master
+>>>>>>>>>>>
+
+rs.add("mongodb1.example.net")
+rs.add("mongodb2.example.net")
+
+
+

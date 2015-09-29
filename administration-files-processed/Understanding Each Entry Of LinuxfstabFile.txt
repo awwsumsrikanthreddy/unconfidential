@@ -1,0 +1,128 @@
+Understanding Each Entry Of Linux Fstab ( /etc/fstab ) File
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>description>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>The ‘/etc/fstab’ file is one of the important configuration file used by Linux machines which specify the devices and partitions available and where/how to use these partitions. 
+
+>>This file will be created/updated during the system installation. You need to modify or maintain it in the way you need to use the devices/partitions.
+
+>>In Linux each device is available as a directory in ‘/dev’ folder. That is, when you connect a floppy drive or plug in any external device to a Linux machine, it will be showing up in /dev folder. 
+
+>>But, you won’t be able to use the device or access contents from it using that device file. You need to mount the device in order to make it available for use. 
+
+>>The fstab file allows you to specify how and what options need to be used for mounting a particular device or partition, so that it will be using that options every time you mount it.
+
+>>This file is read each time when the system is booted and specified filesystem is mounted accordingly. You could also comment out the specified lines and can manually mount filesystem after reboot.
+
+>>example, if your fstab file (/etc/fstab) contains the following entry,
+
+                          /dev/hdc /cdrom iso9660 rw,noauto,user 0 0
+
+>>You just need to issue the following command to mount cdrom after inserting a CD into the CD drive.
+
+                              mount /cdrom
+
+>>This will mount the CDROM to the folder /cdrom with the options ‘rw, noauto and user’ (we will go through the various options in detail later) and you will be browse the contents of the CD through the directory /cdrom.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+fstab Entry
+
+>>Each line in fstab correspond to a particular device or partitions. A sample entry on fstab file is as follows.
+
+                            #device mounting_directory filesystem_type options dump fsck
+                        
+                             /dev/hdc /cdrom iso9660 rw,noauto,user 0 0
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+explanation for /etc/fstab fields:
+
+
+• The first field
+
+>>corresponds to the device name. If you have plugged in an external device and confused about the device name, you need to use ‘dmesg’ or ‘tail –f /var/log/messages’ to find the device name. 
+
+>>For SCSI hard disks, devices will be names like /dev/sda (first drive), /dev/sdb (second drive).
+
+
+• The second field
+
+>>mentions the mount point on which the device needs to be mounted. This directory should exist. That is, you need to create th directory before using mount command.
+
+
+• Third field
+
+>> it is the filesystem type. The various important file system types are,
+
+ext2 and ext3: Commonly all latest Linux partitions are Ext3. Ext3 is a newer filesystem type that differs from Ext2 in that it's journaled, meaning that if you turn the computer off without properly shutting down, you shouldn't lose any data and your system shouldn't spend ages doing filesystem checks the next time you boot up.
+
+- reiserfs - ReiserFS is a journaled filesystem, but it's much more advanced than Ext3. Many Linux distros (including SuSE) have started using ReiserFS as their default filesystem for Linux partitions.
+
+- Swap- The filesystem type "swap" is used in your swap partitions.
+
+- vfat and ntfs : The USB stick is most likely formatted as Vfat (more widely known as FAT32). The Windows partitions are probably either Vfat or NTFS.
+
+- ISO 9660 – This is a common format that target Compact Discs, DVDs and Blu-ray discs.
+
+- Auto- The option "auto" simply means that the filesystem type is detected automatically. Normally floppy or CDROMs will be given this option as their filesystem type may vary.
+
+
+
+• The fourth field
+
+>>describes the mount options. There are latrge number of mount options available. We will go through the important options that a server admin should be aware of.
+
+- auto and noauto : auto specifies that the device/partition should be automatically mounted on boot time and ‘noauto’ specifies that the device should be explicitly mounted. When you execute ‘mount –a’ all partition that has ‘auto’ value set will get mounted automatically. The root partitions should have the ‘auto’ option set so that the partition will get mounted automatically.
+
+- exec and noexec : The option ‘exec’ specifies that the files residing in that device will be able to execute and ‘noexec’ remove the execute feature. The partitions which are intended to keep non executable files like /var or /tmp can have noexec feature enabled for better security.
+
+- user and nouser : The ‘user’ option specifies that the users will be able to mount the partitions and ‘nouser’ specifies that only root user can mount any partitions. The ‘user’ option should be set for devices like ‘floppy or cdrom’ so that the users will be able to mount the device rather than being root.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Example:
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>This will allow user to mount to directory other than root. Make sure you enabled permission on mountpoint directory for the required user before mounting. 
+
+>>On a mounted directory even if you set permission it normally don't work.
+
+                       
+                            /source/location /destination/mountpoint ext3 user,defaults 0 2
+
+>>Other options, here you can explicitly set owner and group name
+
+                          /source/location /destination/mountpoint ext3 -o uid=linux -o gid=opensource
+
+                                               or
+
+                         /source/location /destination/mountpoint ext3 uid=linux,gid=opensource
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+- ro and rw : The option ‘ro’ specifies that the filesystem should be mounted as read-only and the option ‘rw’ enables read-write.
+
+- sync and async – This specifies how the input and output to the filesystem should be done. sync means it should be done synchronously. That is, when you copy a file to the floppy, the changes are physically written to the floppy at the same time you issue the copy command. For ‘async’, the changes will be written only at the time of unmounting the floppy.
+
+- suid / nosuid – The option ‘suid’ permit the operation of suid, and sgid bits and the option ‘nosuid’ block the operation of suid and sgid bits.
+
+- Defaults - The normal default for Ext3 file systems is equivalent to rw,suid,dev,exec,auto,nouser,async(no acl support).
+
+
+
+• The fifth field
+
+>>specifies the option that need to be used by the dump program. 
+
+>>If the value is set to 0, then the partition is execluded from taking backup and if the option is a nonzero value, the device will be backed up.
+
+
+
+• The sixth field
+
+>>mentions the fsck option. That is if the value is set to zero, the device or partition will be excluded from fsck check and if it is nonzero the fsck check will be run in the order in which the value is set. 
+
+>>The root partition will have this value set to one so that it will be checked first by fsck.
+
+
+
+
+If you face any troubles on mounting a partition, the file /etc/fstab should be checked for any misconfiguration.

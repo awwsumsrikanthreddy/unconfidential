@@ -1,0 +1,178 @@
+mongodb administration and crud operations
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+mongodb provides following editions
+
+1.mongo Shell Edition
+
+2.Node.JS Edition
+	
+3.Python Edition
+
+4.C++ Edition
+	
+5.Java Edition
+
+6.C# Edition
+
+
+CRUD Operations
+>>>>>>>>>>>>>>>
+
+1.using the MongoDB save() method to save our data to our users collection:create
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+>>CreateOur first operation of discussion will be creating objects within the database. 
+
+>>MongoDB uses a JSON style object format called BSON as it’s storage. BSON is pretty much a binary representation of a JSON object. So it makes sense that the methods that are enacted upon the database are also JavaScript-esque. 
+
+>>We’re going to be creating a users collection and our first user. A collection in MongoDB is synonymous with a table in SQL based databases.
+
+Let’s take a look
+
+command: db.users.save({name:"John Doe",age:30,job:"engineer",email:"name@example.com"})
+
+
+
+
+2.To return  the  document using find() method:read
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+>>Now that we have a data object in our database, we can read it! There are many ways to read data in MongoDB. The primary method for reading data is the find() method. Let’s take a look at some basic usage of the find() method.
+
+command: db.users.find({name:"John Doe"})
+
+
+>>To return only the first document that matches we need to use the findOne() method:
+
+command: db.users.findOne({name:"John Doe"})
+
+
+>>If you’re just trying to figure out how many documents match your query, you can use the count() method:
+
+
+command: db.users.count({name:"John Doe"})
+
+
+
+3.Update
+>>>>>>>>
+>>To update a document in your MongoDB database you need to use the update() method. The update method accepts two parameters, the query and the update. 
+
+>>The query is the first parameter passed through the method, then the update parameter which is preceded by a comma.
+
+An example of the update() method looks like this:
+
+
+command: db.users.update({name:"John Doe"}, {age: 28})
+
+
+>>Be cautious, this will overwrite everything in your document and leave it as just “{ age: 28 }”.
+
+>>To update just a single key value pair, we need to add some keywords to the query:
+
+command: db.users.update({name: "John Doe"}, { $set: { age: 28}})
+
+	
+>>Now we would retain all of the information that was in the document, and just change the value of age.
+
+>>For more options and information regarding the update() method, head over to the MongoDB documentation.
+
+
+4.Delete
+>>>>>>>>>
+>>The last method is pretty simple, it’s the remove() method. This method is what you would use to delete data or sets of data from your database:
+
+command: db.users.remove({name: "John Doe"})
+
+	
+>>You could use keywords to alter the meaning of the remove method from within the parameter parenthesis, for more on this visit the documentation.
+
+>>Like the find() method, this method will delete every document that matches or contains the query parameter unless otherwise specified.
+
+>>Those are the basics of creating, reading, updating and deleting with MongoDB. As you can see it’s very agile and easy to learn! 
+
+>>You could use keywords to alter the meaning of the remove method from within the parameter parenthesis, for more on this visit the documentation.
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+1.Insert a document into a collection.
+
+>>Insert a document into a collection named inventory. The operation will create the collection if the collection does not currently exist.
+
+
+command: db.inventory.insert(
+   {
+     item: "ABC1",
+     details: {
+        model: "14Q3",
+        manufacturer: "XYZ Company"
+     },
+     stock: [ { size: "S", qty: 25 }, { size: "M", qty: 50 } ],
+     category: "clothing"
+   }
+)
+
+
+
+
+>>The operation returns a WriteResult object with the status of the operation. A successful insert of the document returns the following object:
+
+o/p: WriteResult({ "nInserted" : 1 })
+
+
+2.Review the inserted document.
+
+>>If the insert operation is successful, verify the insertion by querying the collection.
+
+command: db.inventory.find()
+
+
+
+
+3.Create an array of documents.
+
+Define a variable mydocuments that holds an array of documents to insert.
+
+command: 
+
+var mydocuments =
+    [
+      {
+        item: "ABC2",
+        details: { model: "14Q3", manufacturer: "M1 Corporation" },
+        stock: [ { size: "M", qty: 50 } ],
+        category: "clothing"
+      },
+      {
+        item: "MNO2",
+        details: { model: "14Q3", manufacturer: "ABC Company" },
+        stock: [ { size: "S", qty: 5 }, { size: "M", qty: 5 }, { size: "L", qty: 1 } ],
+        category: "clothing"
+      },
+      {
+        item: "IJK2",
+        details: { model: "14Q2", manufacturer: "M5 Corporation" },
+        stock: [ { size: "S", qty: 5 }, { size: "L", qty: 1 } ],
+        category: "houseware"
+      }
+    ];
+
+
+
+
+
+>>Insert the documents.
+
+>>Pass the mydocuments array to the db.collection.insert() to perform a bulk insert.
+
+command: db.inventory.insert( mydocuments );
+
+
+
+
+

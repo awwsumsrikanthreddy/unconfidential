@@ -1,0 +1,78 @@
+link:http://lifuzu.com/blog/2015/01/07/setup-mongo-database-master-slave-replication/
+
+link: http://blog.ajduke.in/2013/05/31/setup-mongodb-replica-set-in-4-steps/
+
+imp link: http://www.tutorialspoint.com/mongodb/mongodb_drop_collection.htm
+
+link: http://docs.jelastic.com/mongodb-master-slave-replication
+
+link:http://zcentric.com/2010/06/01/setup-mongodb-masterslave-replication/
+
+link:https://gist.github.com/tamoyal/10441108
+
+link:http://agiletesting.blogspot.in/2010/05/deploying-mongodb-with-master-slave.html
+
+
+link: http://blog.ajduke.in/2013/05/31/setup-mongodb-replica-set-in-4-steps/
+
+link:https://dzone.com/articles/gain-better-understanding
+
+link:https://myadventuresincoding.wordpress.com/2010/04/26/mongodb-connecting-a-slave-to-a-master-running-in-auth-mode/
+
+link:https://docs.mongodb.org/manual/core/master-slave/
+
+
+at master:
+>>>>>>>>>
+
+1.service mongod stop
+
+2.rm -rf /tmp/*
+
+3.mongod --master --dbpath /var/lib/mongo/
+
+
+slave:
+>>>>>>
+
+1.service mongod stop
+
+2.mongod --slave --source example2.com:27017 --dbpath /var/lib/mongo/
+
+
+
+at  master:
+>>>>>>>>>>
+
+1.mongo
+
+2.use admin
+
+3. db.users.insert({user:"abc", passwd: "123"})
+
+
+at slave
+>>>>>>>>>>
+
+1.mongo
+
+2.show dbs
+
+if encountered any errors
+
+
+rs.printSlaveReplicationInfo()
+
+rs.printReplicationInfo()
+
+
+rs.slaveOK()
+
+db.getReplicationInfo()
+
+db.serverStatus()
+
+
+
+
+

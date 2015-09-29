@@ -1,0 +1,24 @@
+Vagrant
+
+Vagrant is used to set up one or more virtual machines by:
+
+    Importing pre-made images (called "boxes")
+    Setting VM-specific settings (IP address, hostnames, port forwarding, memory, etc.)
+    Running provisioning software like Puppet or Chef
+
+Note that it doesn't install software or set up the machine past loading the VM and setting VirtualBox settings. Think of it as a scripting engine for VirtualBox.
+
+Here are some reasons I've seen for using Vagrant over just VirtualBox.
+1. Set Up Multi-VM Networks with Ease
+
+Most of the Vagrant power-user content I've read has been about setting up multiple VMs at the same time. Vagrant gives you a single config file to set these up, enabling you to launch all of them with one command.
+
+Say you've configured three VMs to network with each other using static IPs on the 192.168.1.* subnet. You find yourself in a location that is already using that subnet to hand out IP addresses, and your VMs now conflict. With Vagrant, you can simply edit the Vagrantfile and reload the VMs, whereas with VirtualBox you'd have to open the settings for each VM, if not boot each VM and change them inside.
+2. Source Control
+
+By putting the settings in a text file, it enables the configuration to be put under source control. Made some changes last week and accidentally broke the image? Just revert the changes and reload the VM. You can accomplish this with VirtualBox snapshots, but it will take up much more space than just a Vagrantfile.
+3. Various Platforms
+
+There's a large number of boxes available at sites such as http://vagrantbox.es. This enables you to try various OSes or distributions, applying the same provisioning to set up similar environments. This can help with testing or adding support to new platforms, and would be time-consuming using just VirtualBox.
+
+There are a lot of arguments for using provisioning software, as well as using image snapshots. For additional discussion, I'll point you to Stephen Nelson-Smith's excellent article How to Build 100 Web Servers in a Day.

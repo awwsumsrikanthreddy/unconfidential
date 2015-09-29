@@ -1,0 +1,10 @@
+http://docs.mongodb.org/master/tutorial/insert-documents/
+
+http://docs.mongodb.org/manual/reference/method/db.collection.drop/
+
+http://www.dbtutorials.com/mongodb/crud-operations-mongodb/
+
+
+http://docs.mongodb.org/master/MongoDB-crud-guide.pdf
+
+http://docs.mongodb.org/master/MongoDB-crud-guide.pdf

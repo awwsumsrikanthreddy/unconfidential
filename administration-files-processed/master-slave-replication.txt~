@@ -1,0 +1,54 @@
+at master:
+>>>>>>>>>
+
+1.service mongod stop
+
+2.rm -rf /tmp/*
+
+3.mongod --master --dbpath /var/lib/mongo/
+
+
+slave:
+>>>>>>
+
+1.service mongod stop
+
+2.mongod --slave --source example2.com:27017 --dbpath /var/lib/mongo/
+
+
+
+at  master:
+>>>>>>>>>>
+
+1.mongo
+
+2.use admin
+
+3. db.users.insert({user:"abc", passwd: "123"})
+
+
+at slave
+>>>>>>>>>>
+
+1.mongo
+
+2.show dbs
+
+if encountered any errors
+
+
+rs.printSlaveReplicationInfo()
+
+rs.printReplicationInfo()
+
+
+rs.slaveOK()
+
+db.getReplicationInfo()
+
+db.serverStatus()
+
+
+
+
+

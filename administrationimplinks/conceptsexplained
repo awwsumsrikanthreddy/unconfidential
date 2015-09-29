@@ -1,0 +1,189 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Q1.How can I configure a service to run at startup?????
+
+    You can run your script on boot process in Ubuntu by adding it to /etc/init.d/rc.local file. Look the steps below.
+
+    Open /etc/rc.local file with this command:
+
+  a.  vim /etc/rc.local
+
+  b.  Add your script that you want to run on boot process there, for example:
+
+  c.  sh /home/ivan/iptables.sh echo 'Iptable Configured!'
+
+  d   Review the comments included in that file and make sure a exit 0 is at the end.
+
+  e.  Save the files. And your script will run on boot process.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Q2.startx  gui for ubuntu?
+
+
+  a.  Run sudo service lightdm start . This will launch lightdm and let me get into the full Ubuntu desktop. Disadvantage: I have to log in again, and there's no easy way to get rid of it without returning to the console (CTRL-ALT-1) and stopping the service. (or rebooting).
+  
+  b.  Run xinit . This puts up a minimal GUI with an xterm window, but from within that window I can run gnome-session, which seems to trigger the launch of the full Ubuntu desktop. Disadvantage: the xterm window has to remain running (gnome-session can't be put in the background). Quitting the GUI is a matter of using "Log Out" or hitting Ctrl-C in the xterm window (stopping gnome-session), then exiting the xterm window to quit the X session.
+  
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Q3.How To CentOS / RHEL 7 Install Gnome Desktop Using Yum
+
+commands:
+a.yum grouplist
+b.sudo yum groups install "GNOME Desktop"  or  sudo yum groupinstall "GNOME Desktop"
+>>>>>>>>>>>>
+
+IN RHEL 7
+c.sudo yum groups install "Server with GUI"
+d.sudo yum groupinstall "Server with GUI"
+>>>>>>>>>>>>
+
+How do I set the system to boot directly into the GUI in CentOS7/RHEL 7:
+
+a.systemctl set-default graphical.target
+
+>>>>>>>>>>>>
+
+How do I switch or start GUI login from command line:
+
+a.systemctl start graphical.target
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Q3.30 Things to Do After Minimal RHEL/CentOS 7 Installation
+
+1. Register and Enable Red Hat Subscription
+2. Configure Network with Static IP Address
+3. Set Hostname of Server
+4. Update or Upgrade CentOS Minimal Install
+5. Install Command Line Web Browser
+6. Install Apache HTTP Server
+7. Install PHP
+8. Install MariaDB Database
+9. Install and Configure SSH Server
+10. Install GCC (GNU Compiler Collection)
+11. Install Java
+12. Install Apache Tomcat
+13. Install Nmap to Monitor Open Ports
+14. FirewallD Configuration
+15. Installing Wget
+16. Installing Telnet
+17. Installing Webmin
+18. Enable Third Party Repositories
+19. Install 7-zip Utility
+20. Install NTFS-3G Driver
+21. Install Vsftpd FTP Server
+22. Install and Configure sudo
+23. Install and Enable SELinux
+24. Install Rootkit Hunter
+25. Install Linux Malware Detect (LMD)
+26. Server Bandwidth Testing with Speedtest-cli
+27. Configure Cron Jobs
+28. Install Owncloud
+29. Enable Virtualization with Virtualbox
+30. Password Protect GRUB
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+Q4.How To Use Netcat to Establish and Test TCP and UDP Connections on a VPS
+
+ 1.Often referred to as a Swiss army knife of networking tools, this versatile command can assist you in monitoring, testing, and sending data across network connections.
+ 
+ 2. syntax general
+      
+      netcat [options] host port
+
+ 3.If you would like to send a UDP packet instead of initiating a TCP connection, you can use the -u option:
+    
+      netcat -u host port
+      
+ 4. You can specify a range of ports by placing a dash between the first and last:
+
+      netcat host startport-endport
+ 
+>>>>>>>>>>>>>>>>>>>>>>
+
+How To Use Netcat for Port Scanning
+
+ 1. For instance, we can scan all ports up to 1000 by issuing this command:
+
+netcat -z -v domain.com 1-1000
+
+ 2. ou can then use the -n flag to specify that you do not need to resolve the IP address using DNS:
+
+netcat -z -n -v 111.111.111.111 1-1000
+
+ 3. We will redirect standard error to standard output using the 2>&1 bash syntax. We will then filter the results with grep:
+
+netcat -z -n -v 111.111.111.111 1-1000 2>&1 | grep succeeded
+
+Connection to 111.111.111.111 22 port [tcp/*] succeeded!
+
+>>>>>>>>>>>>>>>>>>>
+
+How To Communicate through Netcat
+
+ 1. On one machine, you can tell netcat to listen to a specific port for connections. We can do this by providing the -l parameter and choosing a port:
+
+    netcat -l 4444
+    
+ 2. On a second server, we can connect to the first machine on the port number we choose. We do this the same way we've been establishing connections previously:
+
+    netcat domain.com 4444
+    
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+How To Send Files through Netcat
+
+ 1. first computer
+    netcat -l 4444 > received_file
+  
+ 2.On the second computer, create a simple text file by typing:
+
+    echo "Hello, this is a file" > original_file
+    
+ 3.The file will be transmitted just as if we had typed it interactively:
+
+    netcat domain.com 4444 < original_file
+    
+    cat received_file
+  
+ 4.On the receiving end, we can anticipate a file coming over that will need to be unzipped and extracted  by typing:
+
+     netcat -l 4444 | tar xzvf -
+ 
+ 5. On the side with the directory contents we want to transfer, we can pack them into a tarball and then send them to the remote computer through netcat:
+
+     tar -czf - * | netcat domain.com 4444
+     
+>>>>>>>>>>>>>>>>>>>>
+
+How To Use Netcat as a Simple Web Server
+
+Without root privileges, you cannot serve this file on the default web port, port 80. We can choose port 8888 as a regular user.
+
+If you just want to serve one page, one time to check how it renders, you can type something like this:
+
+            netcat -l 8888 < index.html
+            
+            http://server_IP:8888
+            
+             but
+             
+This will serve the page, and then the netcat connection will close. If you attempt to refresh the page, it will be gone:
+
+so,
+
+
+We can have netcat serve the page indefinitely by wrapping the last command in an infinite loop, like this:
+
+             while true; do nc -l 8888 < index.html; done
+             
+             
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>             
+
+
+
+
+
+
+
+
+

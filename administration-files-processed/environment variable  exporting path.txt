@@ -1,0 +1,74 @@
+environment variable  exporting path
+
+>>An environment variable is an object that is given a name and contains data that is used by applications on the system. 
+
+>>To view your environment variables, you can use the “env” or “printenv” command.
+
+>>View your environment variables
+
+                       command: env
+
+>>You will see a list typically VARIABLENAME=VARIABLEDATA1:VARIABLEDATA2, etc. For example, the PATH variable allows you to type commands without typing the full path (‘ls’ instead of ‘/bin/ls’). Because /bin is typically in PATH by default, you can simply type ‘ls’.
+
+>>These variables can be referenced from the command line in bash by prefixing them with a “$”. We can echo the PATH variable to view its contents with:
+
+                    command: echo $PATH
+
+>>Lets say you have a bunch of shell scripts that you keep in /opt/scripts, and wish to execute them without typing the full path. We need to add /opt/scripts to the PATH environment variable.
+
+>>So we checked the current path with the echo $PATH command above and saw some output that looks like this.
+
+                     
+               /usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin
+
+>>We don’t see /opt/scripts in that path, so in order to run a script foo.sh in that folder we have to type /opt/scripts/foo.sh. If we want to just type in foo.sh, we have to update the PATH environment variable.
+
+>>To do this for the session, we use the export command. This will set the environment variable PATH equal to it’s current value (referenced with $PATH) and append /opt/scripts to the end of it.
+
+                   command: export PATH=$PATH:/opt/scripts
+
+>>We can view the change by echoing $PATH again.
+
+                    command: echo $PATH
+
+Now we see this for PATH.
+
+                    /usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/scripts
+
+>>And now we can simply type “foo.sh” instead of “/opt/scripts/foo.sh”.
+
+>>This change will last until you logout of your terminal session, and will not be available if you open up a second session. You can make this change permanent globally or per-user.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+To make it permanent for your user on the server, 
+
+>>you would add it to /home/user/.bashrc file. The .bashrc file is sourced when you login, so the parameters will become active when you login.
+
+>>Add the following lines to your .bashrc file.
+
+                    command: PATH={$PATH}:/opt/scripts
+
+>>Now when you login, you can simply type foo.sh at your liesure without worrying about setting the variable every time.
+
+>>If you want to make this change global for all users, add an entry in /etc/profile.d. I wouldn’t recommend editing /etc/profile itself.
+
+        command:  echo "PATH=${PATH}:/opt/scripts" > /etc/profile.d/scripts-path.sh && chmod 755 /etc/profile.d/scripts-path.sh
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Other environment variables
+
+EDITOR – defined the default editor to be used when modifying files with commands like visudo and crontab. To set your default editor to nano just type the following.
+
+export EDITOR=nano
+
+You can also change your default editor locally in .bashrc or /etc/profile.d/ like we did above with PATH.
+
+HOME – your home directory. For user motorrobot it would be /home/motorrobot
+PWD – the current directory you’re working in.
+OLDPWD – previous working directory.
+SHELL – interactive shell you’re running (typically bash).
+PS1 – command prompt, you can modify what it says and the colors. I like to make it say user@host:/full/path so that I can easily copy/paste for rsync or scp, etc. I also like to use different colors depending on what environment I’m in, dev, prod, etc.
+LSCOLORS – colors of directories, executable files, hidden files, etc. can be set with this.
+PROMPT_COMMAND – set what the title bar of your terminal reads, I set it similar to PS1. This works on iTerm for OS X, and the default terminal program.

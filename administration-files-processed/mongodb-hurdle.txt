@@ -1,0 +1,10 @@
+concur mongodb
+>>>>>>>>>>>>>>>>
+
+
+1.The only hurdle I faced during the setting up shard on my localhost is… we should add allowLocal to the adShard command else Mongo ignores sharding on local …
+
+db.runCommand( { addshard : “localhost:10000″, name : “shard10000″ ,allowLocal:true} );
+
+
+2.http://yakiloo.com/mongodb-sharding/

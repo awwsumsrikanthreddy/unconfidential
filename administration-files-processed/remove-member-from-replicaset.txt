@@ -1,0 +1,5 @@
+remove member from replicaset
+
+
+rs.remove("mongod3.example.net:27017")
+rs.remove("mongod3.example.net")

@@ -1,0 +1,140 @@
+mongodb administration commands
+
+link: https://docs.mongodb.org/v3.0/administration/monitoring/
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Utilities
+>>>>>>>>>
+
+>>The MongoDB distribution includes a number of utilities that quickly return statistics about instances’ performance and activity. 
+
+>>Typically, these are most useful for diagnosing issues and assessing normal operation.
+
+
+mongostat
+>>>>>>>>>
+
+>>mongostat captures and returns the counts of database operations by type (e.g. insert, query, update, delete, etc.). These counts report on the load distribution on the server.
+
+>>Use mongostat to understand the distribution of operation types and to inform capacity planning. See the mongostat manual for details.
+
+
+
+mongotop
+>>>>>>>>
+
+>>mongotop tracks and reports the current read and write activity of a MongoDB instance, and reports these statistics on a per collection basis.
+
+>>Use mongotop to check if your database activity and use match your expectations. See the mongotop manual for details.
+
+
+
+HTTP Console
+>>>>>>>>>>>>
+
+>>MongoDB provides a web interface that exposes diagnostic and monitoring information in a simple web page. The web interface is accessible at localhost:<port>, where the <port> number is 1000 more than the mongod port .
+
+>>For example, if a locally running mongod is using the default port 27017, access the HTTP console at http://localhost:28017.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+Commands
+>>>>>>>>>
+
+>>MongoDB includes a number of commands that report on the state of the database.
+
+>>These data may provide a finer level of granularity than the utilities discussed above. 
+
+>>Consider using their output in scripts and programs to develop custom alerts, or to modify the behavior of your application in response to the activity of your instance. The db.currentOp method is another useful tool for identifying the database instance’s in-progress operations.
+
+
+serverStatus
+>>>>>>>>>>>>
+
+>>The serverStatus command, or db.serverStatus() from the shell, returns a general overview of the status of the database, detailing disk usage, memory use, connection, journaling, and index access. The command returns quickly and does not impact MongoDB performance.
+
+>>serverStatus outputs an account of the state of a MongoDB instance. This command is rarely run directly. In most cases, the data is more meaningful when aggregated, as one would see with monitoring tools including MongoDB Cloud Manager and Ops Manager. 
+
+>>Nevertheless, all administrators should be familiar with the data provided by serverStatus.
+
+
+dbStats
+>>>>>>>
+
+>>The dbStats command, or db.stats() from the shell, returns a document that addresses storage use and data volumes. The dbStats reflect the amount of storage used, the quantity of data contained in the database, and object, collection, and index counters.
+
+>>Use this data to monitor the state and storage capacity of a specific database. This output also allows you to compare use between databases and to determine the average document size in a database.
+
+
+collStats
+>>>>>>>>>>
+
+>>The collStats or db.collection.stats() from the shell that provides statistics that resemble dbStats on the collection level, including a count of the objects in the collection, the size of the collection, the amount of disk space used by the collection, and information about its indexes.
+
+
+replSetGetStatus
+>>>>>>>>>>>>>>>>>
+
+>>The replSetGetStatus command (rs.status() from the shell) returns an overview of your replica set’s status. The replSetGetStatus document details the state and configuration of the replica set and statistics about its members.
+
+>>Use this data to ensure that replication is properly configured, and to check the connections between the current host and the other members of the replica set.
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+Third Party Tools
+>>>>>>>>>>>>>>>>>>
+
+>>A number of third party monitoring tools have support for MongoDB, either directly, or through their own plugins.
+Self Hosted Monitoring Tools
+
+>>These are monitoring tools that you must install, configure and maintain on your own servers. Most are open source.
+
+Tool 	          Plugin                            	Description
+Gangli        mongodb-ganglia 	Python script to report operations/second,memory usage,btree statistics,master/slave status,currentconnections.
+Ganglia   gmond_python_modules 	Parses output from the serverStatus and replSetGetStatus commands.
+Motop 	           None 	Realtime monitoring tool for MongoDB servers. Shows current operations ordered by durations every second.
+mtop 	           None 	A top like tool.
+Munin 	       mongo-munin 	Retrieves server statistics.
+Munin 	       mongomon 	Retrieves collection statistics (sizes, index sizes, and each (configured) collection count for one DB).
+Munin 	munin-plugins Ubuntu PPA 	Some additional munin plugins not in the main distribution.
+Nagios 	nagios-plugin-mongodb 	A simple Nagios check script, written in Python.
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+Hosted (SaaS) Monitoring Tools
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+1.mogodbcloud manager
+
+2.scout
+
+3.server density
+
+4.application performance management
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+Process Logging
+>>>>>>>>>>>>>>>>
+
+>>During normal operation, mongod and mongos instances report a live account of all server activity and operations to either standard output or a log file. The following runtime settings control these options.
+
+1.quiet: Limits the amount of information written to the log or output.
+
+2.verbosity: Increases the amount of information written to the log or output. You can also modify the logging verbosity during runtime with the logLevel parameter or the db.setLogLevel() method in the shell.
+
+3.path: Enables logging to a file, rather than the standard output. You must specify the full path to the log file when adjusting this setting.
+    
+4.logAppend: Adds information to a log file instead of overwriting the file.
+
+Note

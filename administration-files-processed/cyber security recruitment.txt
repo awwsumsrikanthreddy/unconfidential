@@ -1,0 +1,37 @@
+cyber security recruitment
+
+
+
+Like any other Government recruitment process in India it differs according to the role, largely it's through a process of advertising, written test, interview & selection.
+The Government agencies which recruits Cyber Security Experts are :
+
+Under Home Ministry :
+
+DeitY - Department of Electronics and Information Technology and under which there is ICERT (Indian Computer Emergency Response Team). 
+Freshers(BE/BTECH) :  Through GATE (General Aptitude Test in Engineering). http://gate.iitk.ac.in
+Direct Recruitment : (BE/BTECH mandatory - CEH) certified through Advertisement.
+URL to monitor :
+1. Government of India, Department of Electronics and Information Technology (DeitY) : Home Page
+2. Computer Emergency Response Team
+
+IB -  Intelligence Bureau, is the internal intelligence agency of India.
+URL to monitor : Vacancies |
+
+Under Ministry of  Communications & Information Technology :
+
+DoT - Department of Telecom.
+URL to monitor : Vacancies | Public-Notices | Department of Telecommunications
+
+Under National Security Advisor :
+
+NTRO - National Technical Research Organisation is the premium cryptography and technical organisation in the country.
+URL to monitor : https://ntro.gov.in/ntroWeb/load...
+
+Under Ministry of Defence :
+
+DRDO - Defence Research and Development Organisation, is the state of the art computer security and research programmes.
+URL to monitor : Recruitment and Assessment Centre
+
+Army - One of worlds largest army has the largest culmination of computer security experts in the country.
+URL to monitor : Join Indian Army
+

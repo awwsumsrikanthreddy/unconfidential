@@ -1,0 +1,65 @@
+
+
+links: http://www.unixmen.com/install-configure-nagios-4-centos-7/
+
+links: https://kezhong.wordpress.com/2011/05/29/store-data-from-nagios-into-mysql-using-ndoutils-on-fedora-14/
+
+I’ve installed Nagios as my past post “Install and configure Nagios on Fedora 14 using YUM“. Now I want to store all configuration and event data into MySQL, because the development team wanted to design application to use all these information. 
+
+Install MySQL and NDOutils
+# yum -y install mysql mysql-devel mysql-server gcc-c++
+# yum -y install ndoutils*
+# chkconfig mysqld on
+# service mysqld start
+# chkconfig ndo2db on
+
+Start a shell to MySQL and create and grant access to a database
+# mysql -uroot -p
+mysql> create database nagios
+mysql> GRANT ALL ON nagios.* TO root@localhost IDENTIFIED BY “password”;
+mysql> FLUSH PRIVILEGES;
+mysql> quit
+
+Load the schema
+# cd /usr/share/doc/ndoutils-mysql-*/db
+# perl ./installdb -u root-p password -h localhost -d nagios
+DBD::mysql::db do failed: Table ‘nagios.nagios_dbversion’ doesn’t exist at ./installdb line 51.
+** Creating tables for version 1.4b9
+     Using mysql.sql for installation…
+** Updating table nagios_dbversion
+Done!
+
+Configure the /etc/nagios/nagios.cfg file
+Open the /etc/nagios/nagios.cfg file, search “EVENT BROKER OPTIONS” section and make sure
+event_broker_options=-1
+
+Add the following one line in “EVENT BROKER MODULE(S)” section
+broker_module=/usr/lib64/nagios/brokers/ndomod.so config_file=/etc/nagios/ndomod.cfg
+
+Configure the /etc/nagios/ndo2db.cfg file, and change the below three lines
+db_user=root
+db_pass=password
+debug_level=-1
+
+Start ndo2db
+# service ndo2db start
+
+Restart Nagios
+# service nagios restart
+
+Check the log file if it works
+# tail -f /var/log/messages
+May 29 19:26:30 nagios nagios: Error: Could not load module ‘/usr/lib64/nagios/brokers/ndomod.so’ -> /var/log/nagios/spool/checkresults/nebmodi6yVIr: failed to map segment from shared object: Permission denied
+
+From the above, it did not work
+
+Disable SElinux, restart ndo2db and nagios, check the log file again. It works.
+# setenforce 0
+# service ndo2db restart
+# service nagios restart
+# tail -f /var/log/messages
+# tail -f /var/log/ndoutils/ndo2db.debug
+
+After it worked, configured the /etc/nagios/ndo2db.cfg file, set “debug_level=1”, restart ndu2db and nagios.
+ 
+

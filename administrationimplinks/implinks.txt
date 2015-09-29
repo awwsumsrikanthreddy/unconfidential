@@ -1,0 +1,35 @@
+link1:http://xmodulo.com/
+
+link2:http://www.linuxtopia.org/online_books/centos_linux_guides/centos_desktop_deployment_guide/s1-ddg-remote-desktop-tsclient.html
+
+link3:link1:http://www.server-world.info/en/note?os=CentOS_6&p=mysql
+
+link4:https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial
+
+link5:http://www.tecmint.com/mysqladmin-commands-for-database-administration-in-linux/
+
+link6:https://gist.github.com/hofmannsven/9164408
+
+link7:http://downloads.mysql.com/docs/mysql-tutorial-excerpt-5.1-en.pdf
+
+link8:http://www.tutorialspoint.com/mysql/mysql_tutorial.pdf
+
+link9:http://www.cse.iitk.ac.in/users/bms/pdfDoc/MySQLSmallHelp20090914.pdf
+
+link10: http://www.ducea.com/2006/07/27/allowing-ftp-access-to-files-outside-the-home-directory-chroot/
+
+link11:http://unix.stackexchange.com/questions/94603/limit-ftp-access-only-to-the-var-www-with-vsftpd
+
+link12:http://www.cyberciti.biz/tips/centos-redhat-vsftpd-ftp-with-virtual-users.html
+
+link13:http://ifzenelse.net/en/install-and-configure-your-very-secure-ftp-vsftp-server-centos-linux
+
+link14:http://ifzenelse.net/en/install-and-configure-your-very-secure-ftp-vsftp-server-centos-linux
+
+link15:https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-ftp-vsftpd-conf.html
+
+link16:link: http://www.tecmint.com/mount-google-drive-in-linux-using-google-drive-ocamlfuse-client/3/
+
+link17: http://www.cnx-software.com/2014/04/28/how-to-mount-google-drive-in-linux-with-google-drive-ocamlfuse/
+
+link18: http://www.cyberciti.biz/tips/linux-shared-library-management.html

@@ -1,0 +1,13 @@
+tilde files:
+
+A tilde suffix is usually used for backup files. Vim and Emacs use this convention and probably many other programs, too. .swp files are vim swap files which are only present during editing of a file or in the case vim crashed.
+
+
+
+To find all files ending in a tilde:
+find . -type f -name '*~'
+
+To delete the files ending in tilde:
+find . -type f -name '*~' -exec rm -f '{}' \;
+
+

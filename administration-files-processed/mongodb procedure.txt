@@ -1,0 +1,63 @@
+mongodb procedure 
+
+
+implink: docs.mongodb.org/manual/reference/security/#readWriteAnyDatabase
+
+imp link: http://docs.mongodb.org/manual/reference/method/db.grantRolesToUser/#db.grantRolesToUser
+
+link: http://stackoverflow.com/questions/23743998/cannot-access-database-after-authencation-enabled
+
+link:http://docs.mongodb.org/master/tutorial/manage-users-and-roles/
+
+
+link:http://stackoverflow.com/questions/18823112/mongo-user-privilege-to-read-and-write-to-any-database
+
+link:
+
+Procedure
+>>>>>>>>>>>>
+
+
+
+1
+Connect to MongoDB with the appropriate privileges.
+
+Connect to mongod or mongos either through the localhost exception or as a user with the privileges indicated in the prerequisites section.
+
+In the following example, manager has the required privileges specified in Prerequisites.
+
+mongo --port 27017 -u manager -p 123456 --authenticationDatabase admin
+
+2
+Create the system user administrator.
+
+Add the user with the userAdminAnyDatabase role, and only that role.
+
+The following example creates the user siteUserAdmin user on the admin database:
+
+use admin
+db.createUser(
+  {
+    user: "siteUserAdmin",
+    pwd: "password",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)
+
+3
+Create a user administrator for a single database.
+
+Optionally, you may want to create user administrators that only have access to administer users in a specific database by way of the userAdmin role.
+
+The following example creates the user recordsUserAdmin on the records database:
+
+use records
+db.createUser(
+  {
+    user: "recordsUserAdmin",
+    pwd: "password",
+    roles: [ { role: "userAdmin", db: "records" } ]
+  }
+)
+
+

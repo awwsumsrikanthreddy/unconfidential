@@ -1,0 +1,156 @@
+20 Linux System Monitoring Tools Every SysAdmin Should Know
+
+
+use of monitoring tools
+
+    Finding out bottlenecks.
+    Disk (storage) bottlenecks.
+    CPU and memory bottlenecks.
+    Network bottlenecks.
+
+1. top - Process Activity Command
+
+Commonly Used Hot Keys
+
+The top command provides several useful hot keys:
+Hot Key	Usage
+t	Displays summary information off and on.
+m	Displays memory information off and on.
+A	Sorts the display by top consumers of various system resources. Useful for quick identification of performance-hungry tasks on a system.
+f	Enters an interactive configuration screen for top. Helpful for setting up top for a specific task.
+o	Enables you to interactively select the ordering within top.
+r	Issues renice command.
+k	Issues kill command.
+z	Turn on or off color/mono
+
+
+
+2: vmstat - System Activity, Hardware and System Information
+
+The command vmstat reports information about processes, memory, paging, block IO, traps, and cpu activity.
+command:# vmstat 3
+
+
+Display Memory Utilization Slabinfo
+
+command:# vmstat -m
+
+
+Get Information About Active / Inactive Memory Pages
+
+command: # vmstat -a
+
+
+
+3: w - Find Out Who Is Logged on And What They Are Doing
+
+w command displays information about the users currently on the machine, and their processes.
+
+commanad:# w username
+command:# w vivek
+
+
+
+4: uptime - Tell How Long The System Has Been Running
+
+>>The uptime command can be used to see how long the server has been running. The current time, how long the system has been running, how many users are currently logged on, and the system load averages for the past 1, 5, and 15 minutes.
+
+command: # uptime
+
+Output:
+
+ 18:02:41 up 41 days, 23:42,  1 user,  load average: 0.00, 0.00, 0.00
+
+>>1 can be considered as optimal load value. The load can change from system to system. For a single CPU system 1 - 3 and SMP systems 6-10 load value might be acceptable.
+
+
+
+#5: ps - Displays The Processes
+
+ps command will report a snapshot of the current processes. To select all processes use the -A or -e option:
+
+command: # ps -A
+
+Show Long Format Output
+
+command: # ps -Al
+
+To turn on extra full mode (it will show command line arguments passed to process):
+
+command: # ps -AlF
+
+To See Threads ( LWP and NLWP)
+
+command: # ps -AlFH
+To See Threads After Processes
+
+command: # ps -AlLm
+Print All Process On The Server
+
+command: # ps ax
+command: # ps axu
+
+Print A Process Tree
+
+command: # ps -ejH
+command: # ps axjf
+command: # pstree
+
+Print Security Information
+
+command: # ps -eo euser,ruser,suser,fuser,f,comm,label
+command: # ps axZ
+command: # ps -eM
+
+
+See Every Process Running As User Vivek
+
+command: # ps -U vivek -u vivek u
+
+
+
+Set Output In a User-Defined Format
+
+command: # ps -eo pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,wchan:14,comm
+command: # ps axo stat,euid,ruid,tty,tpgid,sess,pgrp,ppid,pid,pcpu,comm
+command: # ps -eopid,tt,user,fname,tmout,f,wchan
+
+
+
+Display Only The Process IDs of Lighttpd
+
+command: # ps -C lighttpd -o pid=
+
+
+
+OR
+command: # pgrep lighttpd
+
+OR
+command: # pgrep -u vivek php-cgi
+
+
+Display The Name of PID 55977
+
+command: # ps -p 55977 -o comm=
+
+
+Find Out The Top 10 Memory Consuming Process
+
+command: # ps -auxf | sort -nr -k 4 | head -10
+
+
+Find Out top 10 CPU Consuming Process
+
+command: # ps -auxf | sort -nr -k 3 | head -10
+
+command: #6: free - Memory Usage
+
+
+The command free displays the total amount of free and used physical and swap memory in the system, as well as the buffers used by the kernel.
+
+command: # free 
+
+
+
+

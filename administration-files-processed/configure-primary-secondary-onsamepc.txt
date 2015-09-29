@@ -1,0 +1,145 @@
+
+link: http://docs.mongodb.org/master/tutorial/change-hostnames-in-a-replica-set/
+http://docs.mongodb.org/master/reference/method/rs.reconfig/#replica-set-reconfiguration-usage
+http://docs.mongodb.org/manual/core/master-slave/
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+creating primary and secondary on same pc
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+mongod --master --dbpath /data/db1 &
+mongod --slave --source localhost:27017 --dbpath /data/db2 --port 37017
+
+
+>>shutdown both master slave using 
+
+db.adminCommand({shutdown : 1, force : true})
+ 
+
+or
+
+
+rs.stepDown(60)
+
+
+
+mongod --replSet rs0 --logpath /var/log/mongodb/mongod1.log --dbpath /data/db1 --port 27017
+
+mongod --replSet rs0 --logpath /var/log/mongodb/mongod2.log --dbpath /data/db2 --port 37017
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+         ( or )
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+0.
+
+mkdir /data/db1
+mkdir /data/db2
+
+
+1.
+vim /etc/mongod.conf
+
+dbpath /data/db1
+dbpath /data/db2
+
+logpath=/var/log/mongodb/mongod.log
+logpath=/var/log/mongodb/mongod1.log
+
+repelSet=rs0
+ port 27017
+ port 37017
+
+
+2.
+mongod --master --dbpath /data/db1 --logpath /var/log/mongodb/mongod.log
+  
+or
+
+mongod --master --dbpath /data/db1 &
+
+mongo --port 27017
+
+or 
+
+mongo
+
+db.adminCommand({shutdown : 1, force : true})
+
+db.isMaster()
+
+rs.initiate()
+
+rs.status()
+
+
+rs.add("lsn-del-007:37017")
+
+
+or
+
+rs.add("localhost:37017")
+>>>>>>>>>>>>>>>>>>>>>>>>>(try shutdown when normally not working)  db.adminCommand({shutdown : 1, force : true})
+
+
+
+3.
+mongod --replSet <setname>
+
+mongod --replSet rs0 --logpath /var/log/mongodb/mongod.log --dbpath /data/db1 --port 27017
+
+rs.initiate()
+rs.status()
+rs.conf()
+
+
+
+4.
+mongod --slave --source mongodb1:27017 --dbpath /data/db2
+
+
+or
+
+
+mongod --replSet rs0 --logpath /var/log/mongodb/mongod1.log --dbpath /data/db2 --port 37017
+
+
+
+mongo --port 37017
+
+
+5.
+
+mongo --port 27017
+
+
+rs.config()
+rs.conf()
+db.serverStatus()
+
+ps -ef | grep 'mongo'
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+note:
+>>if the  hostname  of  the  member  has  changed,   use
+
+rs.reconfig()
+
+to  update  the replica set configuration document with the new hostname.
+For example, the following sequence of commands
+
+
+
+
+
+cfg =rs.conf()
+cfg.members[2].host = "pocatello.example.net:27017"
+rs.reconfig(cfg)
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+

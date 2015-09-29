@@ -1,0 +1,18 @@
+run a script at boot time
+
+
+
+The scripts that run on start up are stored in the /etc/init.d/ directory. 
+
+
+ Adding a script to run at startup
+
+1.To make a script run at startup of your Xen virtual machine you need to put the script in /etc/init.d and make sure it will take the start and stop arguements. 
+
+2.Once the script is in /etc/init.d you need to tell the system when to run the script. You can use the following command:
+
+chkconfig --level 345 scriptname on
+
+The above command tells the system what runlevel the script needs to be run at. For most scipts the you will want the runlevels of 3, 4, and 5.
+
+

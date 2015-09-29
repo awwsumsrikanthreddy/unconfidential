@@ -1,0 +1,140 @@
+How to Record Programs and Games Using ‘Simple Screen Recorder’ in Linux
+
+>>>>>>>>>>>>>>>>>>>>
+why ??
+
+recording in video the steps you took to get something done will be a nice remainder should you need to perform the same operation in the future. In addition, you can also upload that file to video-sharing sites like YouTube to share with the community and the world.
+
+>>>>>>>>>>>>>>>>>>>>
+
+
+Introducing and Installing Simple Screen Recorder:
+
+>>Simple Screen Recorder is a fantastic piece of software that was initially developed by its author to record output of programs and games. 
+
+>>In time it became everything but ‘simple’, keeping its name not because of a lack in functionality but due to its easy-to-use interface.
+
+>>Follow these steps to install Simple Screen Recorder:
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+On Debian/Ubuntu and Mint
+
+>>The installation in Debian / Ubuntu / Linux Mint is pretty straightforward:
+
+>>Add the repository to your sources.list:
+
+1. command: $ sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder
+
+>>Resynchronize the package index files from their sources and install:
+
+2. command: $ sudo apt-get update
+
+3. command: $ sudo apt-get install simplescreenrecord
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+On Fedora/CentOS and RHEL
+
+
+In Fedora and derivatives (CentOS 7/RHEL 7, for example), several dependencies have to be installed first:
+
+
+1. Add the ATRPMS repository (a generic 3rd party repository used for system and multimedia tools):
+
+  vim /etc/yum.repos.d/atrpm.repo:
+
+
+
+atrpm.repo
+
+[atrpms]
+name=Fedora Core $releasever - $basearch - ATrpms
+baseurl=http://dl.atrpms.net/el$releasever-$basearch/atrpms/stable
+gpgkey=http://ATrpms.net/RPM-GPG-KEY.atrpms
+gpgcheck=1
+
+2. And the EPEL repository as well:
+
+# yum install epel-release
+
+3. Then install the rest of the dependencies:
+
+# yum install ffmpeg ffmpeg-devel libX11-devel libXfixes-devel jack-audio-connection-kit-devel mesa-libGL-devel git
+
+4. Clone the developer’s GitHub repository for Simple Screen Recorder:
+
+# git clone https://github.com/MaartenBaert/ssr
+# cd ssr
+
+5. And finally, execute the installation script. Make sure you do this as a regular user (other than root), otherwise you will encounter permissions issues later down the road:
+
+$ ./simple-build-and-install
+
+If the installation does not create a launch icon in the Applications menu, you can start Simple Screen Recorder from the terminal.
+
+$ simplescreenrecorder
+
+Or create a symbolic link as a shortcut in your Desktop:
+
+# ln –s $(which simplescreenrecorder) ~/Desktop/'Simple Screen Recorder'
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+How to Use Simple Screen Recorder
+
+>>Once you have launched SSR, in the initial screen click Continue:
+
+Simple Screen Recorder Setup
+
+Simple Screen Recorder Setup
+
+>>In the next screen you will choose options such as whether to record the entire screen, a fixed rectangle, or a specific window. To use any of this options, move the cursor away from the Simple Screen Recorder interface and select an area of the screen or click on a window of your choosing, respectively. 
+
+>>You can also choose to record audio and include the cursor in the screencast (or not). Once done, click Continue:
+
+Simple Screen Recorder Settings
+
+Simple Screen Recorder Settings
+
+>>Now it’s time to define the video output format and the location. Feel free to look around to find the settings that may be more adequate for your case (the settings below are just for your reference, and ensure that the video recording tools installed by default in the operating system will be able to play the recording), then click Continue again:
+Set Video Format and Location
+
+Set Video Format and Location
+
+>>Finally, choose a keyboard shortcut to manage the user interface and click Start recording. When you’re done, save the video by clicking Save recording:
+Linux Desktop Screen Recording
+
+Linux Desktop Screen Recording
+
+Alternatively, you can minimize Simple Screen Recorder so that it will not interfere with the screen cast, and start / stop the recording using the key combination selected earlier.
+
+In our example let’s see what happens when we press Ctrl + R:
+Control Desktop Screen Recording
+
+Control Desktop Screen Recording
+
+Then to pause the recording press the key combination again. The red circle will turn grey and you can finally stop the recording and save the file by clicking on it and choosing the corresponding menu:
+Screen Recording On/OFF Settings
+
+Screen Recording On/OFF Settings
+
+Please keep in mind that the above trick will work as long as Simple Screen Recorder is running – it can be minimized but it has to be running.
+Summary
+
+At this point you must have already installed and try out what many Linux users out there consider the best screencrasting tool. Regardless of the reasons why you have chosen to do so, I can assure you you will never look back.
+
+I highly recommend you take a look at the developer’s web site for further ideas and suggestions for improving your videos. Of course, you can also always reach us if you have questions or comments about this article or if you need help to set up Simple Screen Recorder in your computer and run into any issues, using the form below.
+
+Finally, let me tell you how I first found out about this program. A couple of weeks ago I posted a question on Linuxsay.com, and within a couple of hours several community members offered their feedback very fast. You can do so, too, if you have any questions about Linux or Open Source Software in general. We are all here to help you!
+
+
+

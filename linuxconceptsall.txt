@@ -1,0 +1,434 @@
+ample Course Outline
+
+    Overview of the Linux System
+        Linux Distributions and UIs
+            Source Packages
+            Distributions
+            Graphical User Interfaces (GUIs)
+        Console Tools, System Editors, and Filesystem Browsers
+            Getting logged in
+            Editing Text Files
+            The X Desktop and Virtual Consoles
+        Starting, Stopping, Rogue Applications, Booting
+    Linux Operations Review
+        Filesystem Hierarchy and Hierarchy Standard
+            Single-rooted hierarchy
+            Seamless and Extensible Filesystem
+            Mounting Additional Filesystems
+            Filesystem Object Oriented Design
+            Filesystem Standard
+            Unix File and Directory Permissions
+        Essential Shell Commands
+            Basic File Manipulation Commands
+            Directory Navigation Commands
+            Advanced File Manipulation Commands
+            Init, Processes, and Threads
+    Advanced Shell Features
+        Shell Environment
+            Shell and Environment Variables
+        Aliases
+        Shell Quoting, Redirection, and Job Control
+        Common Filter Commands
+        Advanced Pattern Commands
+    Bash Shell Scripting
+        Basics
+        Arguments and Special Variables
+        Control Flow Operators
+        Logic and Tests
+        Reading Input, Spawning Commands, Functions, Complex Evaluations
+        Reading Files
+    Advanced BASH Shell (Optional)
+        Quoting
+        Commands
+            Compound Commands
+        Expansions
+            Brace Expansion
+            Tilde Expansion
+            Parameter Expansion (Variable Substitution)
+        Variables
+        Expressions
+        Control Flow
+        Shell Functions
+        Useful Bash Idioms
+        Filename Completion
+        History Substitution
+            Shell Built-in Variables
+            History Commands
+            History Substitutions
+        Command Editing (Emacs Mode)
+            Emacs Editing
+            Filename Completion
+            Command History
+            Key Bindings and Customization
+    Linux System Installation
+        SUSE or Red Hat Installation
+            Interactive Installation
+            Post-Installation Procedures
+            Network (and Local Disk) Installation
+            Remote Installation (VNC)
+    Automating Installation (e.g.: AutoYaST or Kickstart)
+        Reducing AutoYaST Complexity
+        Generating Starter Configurations: Configuration Manager
+        Control File Syntax
+            Class Example
+        AutoYaST Installer Options
+            Class Example
+        Notes
+        References
+    Package Management
+        RPM Package Manager
+            Core RPM Package Management
+            Source RPMs
+            Getting RPM Packages
+            Source Packages
+        Advanced Package Management
+            Building Standard RPMS
+            Building binary-only RPMS
+    Linux System Operations
+        Graphical configuration tools
+        Kudzu
+        YaST Online Update (YOU) and Up2date
+        SuSEconfig and chkconfig
+    Logins and Accounts
+        Accounts vs. Authentication
+        User Account Attributes
+        Name Service Switch (/etc/nsswitch.conf)
+        Password Database (/etc/passwd)
+        Group Database (/etc/group)
+        General User-Related Commands
+        User Administration Commands (Local)
+            Home Directory Skeleton
+    System services and Runlevels - System V Init
+        Runlevels
+            Default Runlevel
+        Initscripts
+            Runlevel Configuration
+            Runlevel Management Tools
+    Date and Time Management
+        Time and Timezone Files
+        Date and Time Commands
+            Date.
+            Rdate and Ntpdate
+    Resources, Libraries, and Troubleshooting
+         
+            Binary Programs
+            Configuration Files
+            Shared Libraries (aka DLLs)
+    Event Logging (Syslog)
+        Syslog, klogd, and logger
+        Log file locations (defaults)
+        Syslog Concepts
+            Facilities
+            Priorities
+        Syslogd Configuration
+            Syslog.conf
+            Remote Logging
+        Log Rotation (logrotated)
+    Job Scheduling
+        Periodic Job Scheduling: Cron
+            Crontabs
+            System Crontab Files
+            Crontab File Format
+            Crontab Command
+            Restricting Access to Cron
+        One-Time Job Scheduling: at
+    System Backup and Restore
+        Unix Backup Frameworks
+            Tape Archiver (tar)
+            Dump
+            Cpio
+            Pax
+            Backups Using LVM Snapshot Capability
+            Agent-Based Backup
+    Filesystems
+        Filesystem Maintenance Overview
+            Filesystem Partitioning Concepts
+            Sensible Partition Layouts
+        Filesystem Management Commands
+            Swap
+            Native
+            Mounting Filesystems Persistently : /etc/fstab
+            Swap Files
+            Converting Ext2 to the Ext3 Journaling Filesystem
+        Logical Volume Manager (LVM)
+        Software Raid
+        Filesystem Quotas
+        POSIX 1003.1e/1003.2c ACLS: Extended, user-managed filesystem access controls
+        Ext2fs Emergency Repair
+    Kernel Configuration and Installation
+        Overview.
+        Building the Kernel
+        Installing the Kernel
+        Troubleshooting
+    Linux Bootloaders
+        Grand Unified Boot Loader (GRUB)
+            Installation
+        Linux Loader (LILO)
+            Installation
+            Configuration
+    Rescue of a Failed System
+        Boot and Root Disks
+        Rescue Systems
+        System Recovery
+            General Procedures
+    Networking
+        Network Configuration.
+            IP Networking Fundamentals
+            Linux Network Configuration Files and Commands
+        Network Services
+            RPC-Based Services
+            INET Super Server
+            Network Time Services
+            Sharing Desktops with VNC
+            DHCP
+        Remote Administration with SSH and SCP.
+            Configuration
+            Telnet Replacement
+            Secure Copy
+            Rsync
+            RSA and DSA Authentication (Password-less Logins)
+            Remote Command Execution
+            Port Forwarding
+    BIND (Berkeley Internet Name Domain)
+        Overview
+        DNS Lookup
+            Looking up IP Addresses
+            Looking up MX records
+            Reverse Lookup
+            Looking up Nameserver
+        Named.conf
+            Options Section
+            Zone Sections
+        Zone Configuration Files
+            Preliminary Zone Files
+            Zone File
+            Reverse Mapping Zone File
+            Configuring Slave Zones
+        Advanced DNS Topics
+            Delegation
+            Changes To The Zone Files
+    Mail Server
+        MTA - Sendmail
+            Sendmail Basics
+            SMTP
+            Configuration
+            Advanced Sendmail Topics
+        MRA - IMAP and POP3
+            Overview of IMAP and POP3
+            IMAP Installation and Configuration
+            POP3 Installation and Configuration
+        MDA - Procmail
+            Configuration File Location
+            Global Parameters
+            Filtering
+            Putting it all together
+    Apache Web Server
+        Installation and Configuration
+            Basic Configuration
+        Apache Operations
+        Configuration Directives
+            DocumentRoot
+            Scoping Directives
+            Options
+            Access-Control Directives
+            Performance-Tuning Directives
+            Running Apache on Different/Multiple Ports
+            Virtual Host Configuration
+            Apache and SSL
+            Apache SSL Configuration Directives
+            Logging Directives
+            Miscellaneous Directives
+        Apache Modules
+            Informational Modules
+            Mod_Rewrite
+            Mod_Proxy
+            Mod_Auth_*
+            Adding External/3rd-Party Modules
+        Dynamic Publishing
+            Perl
+            PHP
+        Load-Sharing with IP Virtual Server
+            Architecture.
+            Benchmarking with HTTPerf
+    NFS File Server
+        NFS Overview
+            NFS Server Installation and Configuration
+            Tuning and Statistics
+            NFS And /etc/hosts.allow
+        Configuration Changes
+            Portmap
+            NFS Daemon
+            NFS Cautions
+        Troubleshooting
+        Linux NFSv3 Support
+            Trond Myklebust and H. J. Lu NFSv3 Work (Trond NFSv3)
+        NFSv4
+    OpenLDAP Directory Services
+        Overview
+        LDAP/X.500 Basics
+            Distinctive Properties
+            Some Conventions
+        LDAP on Linux
+            OpenLDAP Client
+            OpenLDAP Server
+            Managing Users and Groups in LDAP
+            Name-Service Cache Daemon (NSCD)
+            LDAP-Enabled Applications
+    Samba File Server
+        Introduction to Samba
+            What is Samba?
+            Samba's Features
+            Using Samba
+        Installing Samba
+            Binary Install
+            Source Install
+            Automatic RPM Creation
+        Samba Clients
+            Basics.
+            Smbclient
+            Smbmount
+            Smbtar
+        Configuring Samba
+            Workgroup Installation
+            Debugging
+        Resource Sharing
+            File Shares
+            Sharing Printers
+            Group Shares
+        Domain Controller
+            Server
+            Client
+        Samba Web Administration Tool
+    System Security
+        Overview
+        Application Security
+        Login Security
+            Shadow pasword system
+            Pluggable Authentication Modules (PAM) configuration
+        Resource Limits (Rlimit) and /etc/limits.conf
+            Rlimit Concepts
+            Ulimit
+            Setting Limits in /etc/security/limits.conf
+            Privileged Login Access
+        BSD Process Accounting
+        Boot Loader Security
+            LILO
+            GRUB
+        TCP Wrappers Configuration
+        Iptables Firewalling
+            Preliminaries
+        Iptables Scenarios
+            Packet Filtering
+            Port-Forwarding/Redirection
+            NAT/IP Masquerading
+        Packet-Processing Model
+        Iptables Commands
+            General (non-Rule Defining)
+            Rule-Defining Iptables Commands
+            Matching/Match Extensions
+            Rule Targets
+        Iptables Firewalling
+            Custom
+            Custom, With Save/Restore
+            Bastille-Firewall
+        NAT/IP Masquerading
+            Masquerading
+            Source NAT, NAT Pools
+        Port Forwarding/Redirection
+        Kernel Parameters
+            Routing
+            Packet Fragmentation
+            Connection Tracking (Stateful Firewalling)
+            Source Routed Packets
+            ICMP Restriction
+            Explicit Congestion Notification
+        Related Tools and Techniques
+            Tcpdump
+            nmap/xnmap
+        Bastille Linux
+        Intrusion Detection and Monitoring
+            RPM Verification
+            Tripwire
+            Nmap/Xnmap Network Services Scanner
+            Portsentry
+            Snort
+        Log Scanning and Remote Logging
+            LogWatch
+            Custom Logscanning in Perl
+            Remote Logging
+        Mandatory Access Control (MAC) with LIDS.
+            Overview
+            Linux Capabilities
+            LIDS Security Model
+            LIDS Moving Parts
+            Initial LIDS Configuration
+            Building a LIDS Kernel
+            Before-boot LIDS Configuration
+            After-boot Configuration and Maintenance
+            Additional Information on LIDS
+            build_lids_conf.sh Example
+            Understanding the build_lids_conf.sh Script
+    Troubleshooting and Tuning
+        The Concepts
+        Tunable System Parameters/Limits
+            Filesystems
+            Networking
+            SystemV IPC
+            Threads
+            VM/Buffer Cache
+            RAID (MD)Device Tuning
+            Non-Tunable Limits
+        Performance Reporting/Monitoring Tools
+            Uptime
+            Free
+            Top
+            Vmstat
+            Sysstat (SAR)
+        Troubleshooting Interfaces and Tools
+            PCI Devices
+            SCSI Devices
+            Ethernet Device Troubleshooting
+            Resource Tracking
+    Linux HA (High Availability) Services with Heartbeat
+        HA Concepts.
+            Heartbeat Communications
+            STONITH
+            Heartbeat Configuration Files
+        HA LDAP Service with Heartbeat
+            OpenLDAP Replication
+            Heartbeat Setup
+            Testing and Validation
+    Advanced Scripting with Perl
+        Invoking PERL
+            Script Mode
+            Stream Mode (As in Sed and AWK)
+        Variables and Assignment
+            Scalars
+            Lists
+            Hashes (Hashtables)
+            Magic Variables
+            Operators and Tests
+        Constructs and Control Flow
+            if
+            while
+            for
+        Classic PERL Patterns
+            Reading/Writing Files
+            Open or Die!
+            Scanning Loop With Regular Expression Match
+            Slurp A File
+            Grab Output From A Command (Backtics)
+            Visit Every Item (Iterate Over) A Hash Table
+            Iterate Over A Hash Table, Sorted By Key
+            Pass An (Open) File Descriptor Into A Subroutine
+            Read From Standard Input (And Do Some Math, Too!)
+            TCP Socket Client
+            Install A Signal Handler
+            Become A Daemon
+        Testing and Debugging
+            printf style
+            interactive debugger
+            DDD
+        CPAN
+
+

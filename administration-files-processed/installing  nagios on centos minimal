@@ -1,0 +1,192 @@
+Installing Nagios 3.5 on CentOS 6.5 Minimal
+March 25, 2013 by Rowell Dionicio 39 Comments
+
+Nagios
+I’m in the middle of wrapping my head around a network I’ve inherited about one year ago. Honestly, I should have done this in the beginning but it’s better late than never.
+
+Going into this network there was no monitoring in place. Nagios is a perfect tool for an environment with many services, links, servers, etc.
+
+Here’s a little disclaimer: I’m not a Linux or Nagios guru. The following are from my own experiences and findings in my research. If you’d like to learn more about Nagios, I recommend reading Learning Nagios.
+
+First, download CentOS Minimal and install it. I’m installing CentOS on VMware. Why CentOS Minimal? Because that’s all I need for this operating system, minimalism.
+
+------------------------------------------------------------------------------------------
+1. After you have CentOS installed, enable the eth0 interface
+
+**Not familiar with vi? Here’s an external tutorial.**
+
+vi /etc/sysconfig/network-scripts/ifcfg-eth0
+
+Modify
+
+ONBOOT=no
+
+to
+
+ONBOOT=yes
+
+Add the following to the configuration file, fill the X’s to your IP configuration:
+
+IPADDR=X.X.X.X
+GATEWAY=X.X.X.X
+NETMASK=X.X.X.X
+NETWORK=X.X.X.X
+
+Save the file and quit.
+
+Now we need to restart the network service so this interface is enabled:
+
+service network restart
+
+2. This is about the time I connect to my virtual machine over ssh
+
+Here are the packages we’ll have to install to complete the Nagios installation:
+
+yum install httpd php gcc glibc glibc-common gd gd-devel openssl-devel wget perl make
+
+We’re installing Apache, PHP, GNU Compiler Collection, Standard C Library, graphics library, OpenSSL, file retriever, Perl, and Make.
+
+3. Create the nagios user and set the password
+
+/usr/sbin/useradd -m nagios
+passwd nagios
+
+The -m switch says to create the home directory if it doesn’t exist.
+
+4. Create the nagios group, nagcmd, which will allow external commands to be submitted through the web interface. Then add the nagios user and apache user to the group
+
+/usr/sbin/groupadd nagcmd
+/usr/sbin/usermod -a -G nagcmd nagios
+/usr/sbin/usermod -a -G nagcmd apache
+
+The usermod switches, -a -G, says to append the user to the nagcmd group.
+
+5. Create a temp directory to place the nagios downloads
+
+mkdir ~/downloads
+cd ~/downloads
+
+Download nagios:
+
+wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-3.5.0.tar.gz | wget http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-1.4.16.tar.gz
+
+6. Extract the nagios tar ball
+
+tar xzf nagios-3.5.0.tar.gz
+cd nagios
+
+7. Run the nagios script passing the nagcmd group
+
+./configure --with-command-group=nagcmd
+
+Take note of what gets spit out at the end. This is from my installation:
+
+*** Configuration summary for nagios 3.5.0 03-15-2013 ***:
+
+ General Options:
+ -------------------------
+        Nagios executable:  nagios
+        Nagios user/group:  nagios,nagios
+       Command user/group:  nagios,nagcmd
+            Embedded Perl:  no
+             Event Broker:  yes
+        Install ${prefix}:  /usr/local/nagios
+                Lock file:  ${prefix}/var/nagios.lock
+   Check result directory:  ${prefix}/var/spool/checkresults
+           Init directory:  /etc/rc.d/init.d
+  Apache conf.d directory:  /etc/httpd/conf.d
+             Mail program:  /bin/mail
+                  Host OS:  linux-gnu
+
+ Web Interface Options:
+ ------------------------
+                 HTML URL:  http://localhost/nagios/
+                  CGI URL:  http://localhost/nagios/cgi-bin/
+
+8. Compile the nagios source code
+
+make all
+
+9. Install the binaries, init script, sample configs, and set permissions on external command directory
+
+make install
+make install-init
+make install-config
+make install-commandmode
+
+Nagios is now installed but don’t start it yet.
+
+10. The sample config files have been installed in the /usr/local/nagios/etc directory. Edit the /usr/local/nagios/etc/objects/contacts.cfg file and change the email address associated with the nagiosadmin contact definition to the address you’d like to use for receiving alerts.
+
+vi /usr/local/nagios/etc/objects/contacts.cfg
+
+11. Configure the web interface
+
+make install-webconf
+
+12. Create the nagiosadmin account for logging into the web interface
+
+htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+
+13. Restart Apache
+
+service httpd restart
+
+14. Compile and install the plugins
+
+cd ~/downloads
+tar xzf nagios-plugin (tab) #press the tab key to complete the command
+cd nagios-plugins (tab)
+
+15. Compile and install the plugins
+
+./configure --with-nagios-user=nagios --with-nagios-group=nagios
+make
+make install
+
+16. Add nagios to the system services and have it start when system boots
+
+chkconfig --add nagios
+chkconfig nagios on
+
+17. Verify the nagios configuration files
+
+/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+
+If there are no errors, start Nagios. If there are errors, you have some troubleshooting to do!
+
+service nagios start
+
+18. Find out if you have SELinux in Enforced mode
+
+getenforce
+
+If the value is on then you will need to follow step 19.
+
+19. Most people will tell you to set the Enforce level to 0. This weakens the security of Linux. Instead, run the following commands to run the CGIs under SELinux enforcing/targeted mode
+
+chcon -R -t httpd_sys_content_t /usr/local/nagios/sbin/
+chcon -R -t httpd_sys_content_t /usr/local/nagios/share/
+
+20. Log into the nagios web interface
+
+http://localhost/nagios
+
+21. If you try to access the web interface remotely and the page doesn’t load, check to see if you have IPTABLES enabled
+
+service iptables status
+
+If you don’t see entries for port 80 and/or 443, then it is being denied.
+
+Allow http and https services through IPTABLES:
+
+vi /etc/sysconfig/iptables
+
+Add the following entries:
+
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
+
+Resources
+
+There are a couple of books if you want to get more in-depth with Nagios. I’ll admit that I am no where near being an expert on this topic. I am still learning myself.
